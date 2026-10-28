@@ -73,3 +73,4 @@ bool heap_is_empty(const BinaryHeap *heap);
 #endif
 
 #endif // DS_HEAP_H
+

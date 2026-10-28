@@ -146,3 +146,4 @@ size_t heap_size(const BinaryHeap *heap) {
 bool heap_is_empty(const BinaryHeap *heap) {
     return !heap || heap->size == 0;
 }
+

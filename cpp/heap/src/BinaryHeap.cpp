@@ -12,3 +12,4 @@ namespace ds {
     template class BinaryHeap<std::string>;
     template class BinaryHeap<int, std::greater<int>>;
 }
+

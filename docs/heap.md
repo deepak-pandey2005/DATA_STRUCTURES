@@ -51,3 +51,4 @@ Array: [10, 15, 20, 17, 25]
 - **C (`c/heap/`)**: Generic comparator-based implementation using raw bytes and function pointers (`heap_compare_fn`). Supports both min-heap and max-heap.
 - **C++ (`cpp/heap/`)**: Type-safe generic template `BinaryHeap<T, Compare>` supporting custom functors like `std::less<T>` (max-heap) or `std::greater<T>` (min-heap).
 - **Rust (`rust/src/heap/`)**: Generic `BinaryHeap<T>` using `Ord` and custom predicates with safe vector backing.
+
