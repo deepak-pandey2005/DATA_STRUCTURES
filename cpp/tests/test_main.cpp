@@ -11,6 +11,7 @@
 #include "BinaryHeap.hpp"
 #include "HashTable.hpp"
 #include "Trie.hpp"
+#include "DSU.hpp"
 
 static int g_cpp_tests_passed = 0;
 
@@ -346,6 +347,29 @@ void test_trie_cpp() {
     CPP_TEST_ASSERT(trie.size() == 2);
 }
 
+void test_dsu_cpp() {
+    ds::DSU dsu(6);
+    CPP_TEST_ASSERT(dsu.set_count() == 6);
+
+    CPP_TEST_ASSERT(dsu.unite(0, 1));
+    CPP_TEST_ASSERT(dsu.unite(1, 2));
+    CPP_TEST_ASSERT(dsu.connected(0, 2));
+    CPP_TEST_ASSERT(!dsu.connected(0, 3));
+    CPP_TEST_ASSERT(dsu.set_count() == 4);
+
+    // Redundant merge
+    CPP_TEST_ASSERT(!dsu.unite(0, 2));
+    CPP_TEST_ASSERT(dsu.set_count() == 4);
+
+    CPP_TEST_ASSERT(dsu.unite(3, 4));
+    CPP_TEST_ASSERT(dsu.unite(4, 5));
+    CPP_TEST_ASSERT(dsu.set_count() == 2);
+
+    CPP_TEST_ASSERT(dsu.unite(2, 5));
+    CPP_TEST_ASSERT(dsu.set_count() == 1);
+    CPP_TEST_ASSERT(dsu.connected(0, 4));
+}
+
 int main() {
     std::cout << "==========================================\n";
     std::cout << "   Running C++ Data Structures Test Suite \n";
@@ -360,6 +384,7 @@ int main() {
     RUN_CPP_TEST(test_heap_cpp);
     RUN_CPP_TEST(test_hash_table_cpp);
     RUN_CPP_TEST(test_trie_cpp);
+    RUN_CPP_TEST(test_dsu_cpp);
 
     std::cout << "\nAll " << g_cpp_tests_passed << " C++ tests passed successfully!\n";
     return 0;

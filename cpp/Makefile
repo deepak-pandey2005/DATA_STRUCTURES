@@ -9,6 +9,7 @@ CXXFLAGS = -Wall -Wextra -Wpedantic -std=c++20 \
            -Iheap/include \
            -Ihash_table/include \
            -Itrie/include \
+           -Idsu/include \
            -g
 
 SRCS = vector/src/Vector.cpp \
@@ -19,7 +20,8 @@ SRCS = vector/src/Vector.cpp \
        bst/src/BinarySearchTree.cpp \
        heap/src/BinaryHeap.cpp \
        hash_table/src/HashTable.cpp \
-       trie/src/Trie.cpp
+       trie/src/Trie.cpp \
+       dsu/src/DSU.cpp
 
 TEST_SRCS = tests/test_main.cpp $(SRCS)
 BIN = bin/test_runner

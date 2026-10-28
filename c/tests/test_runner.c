@@ -10,6 +10,7 @@
 #include "heap.h"
 #include "hash_table.h"
 #include "trie.h"
+#include "dsu.h"
 
 static int g_tests_passed = 0;
 
@@ -345,6 +346,41 @@ void test_trie() {
     TEST_ASSERT(trie_is_empty(&trie));
 }
 
+/* --- DSU Tests --- */
+void test_dsu() {
+    DSU dsu;
+    TEST_ASSERT(dsu_init(&dsu, 6) == DS_SUCCESS);
+    TEST_ASSERT(dsu_set_count(&dsu) == 6);
+
+    for (size_t i = 0; i < 6; i++) {
+        for (size_t j = i + 1; j < 6; j++) {
+            TEST_ASSERT(!dsu_connected(&dsu, i, j));
+        }
+    }
+
+    bool merged = false;
+    TEST_ASSERT(dsu_union(&dsu, 0, 1, &merged) == DS_SUCCESS && merged);
+    TEST_ASSERT(dsu_union(&dsu, 1, 2, &merged) == DS_SUCCESS && merged);
+    TEST_ASSERT(dsu_connected(&dsu, 0, 2));
+    TEST_ASSERT(!dsu_connected(&dsu, 0, 3));
+    TEST_ASSERT(dsu_set_count(&dsu) == 4);
+
+    // Union already connected elements
+    TEST_ASSERT(dsu_union(&dsu, 0, 2, &merged) == DS_SUCCESS && !merged);
+    TEST_ASSERT(dsu_set_count(&dsu) == 4);
+
+    TEST_ASSERT(dsu_union(&dsu, 3, 4, &merged) == DS_SUCCESS && merged);
+    TEST_ASSERT(dsu_union(&dsu, 4, 5, &merged) == DS_SUCCESS && merged);
+    TEST_ASSERT(dsu_set_count(&dsu) == 2);
+
+    // Merge both components
+    TEST_ASSERT(dsu_union(&dsu, 2, 3, &merged) == DS_SUCCESS && merged);
+    TEST_ASSERT(dsu_set_count(&dsu) == 1);
+    TEST_ASSERT(dsu_connected(&dsu, 0, 5));
+
+    dsu_destroy(&dsu);
+}
+
 int main(void) {
     printf("========================================\n");
     printf("   Running C Data Structures Test Suite \n");
@@ -359,6 +395,7 @@ int main(void) {
     RUN_TEST(test_heap);
     RUN_TEST(test_hash_table);
     RUN_TEST(test_trie);
+    RUN_TEST(test_dsu);
 
     printf("\nAll %d C tests passed successfully!\n", g_tests_passed);
     return 0;

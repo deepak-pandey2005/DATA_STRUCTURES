@@ -7,6 +7,7 @@ pub mod bst;
 pub mod heap;
 pub mod hash_table;
 pub mod trie;
+pub mod dsu;
 
 pub use vector::MyVec;
 pub use singly_linked_list::SinglyLinkedList;
@@ -17,6 +18,7 @@ pub use bst::BinarySearchTree;
 pub use heap::BinaryHeap;
 pub use hash_table::HashTable;
 pub use trie::Trie;
+pub use dsu::Dsu;
 
 #[cfg(test)]
 mod tests {
@@ -229,5 +231,30 @@ mod tests {
         assert!(!trie.search("band"));
         assert!(trie.search("banana"));
         assert_eq!(trie.len(), 2);
+    }
+
+    #[test]
+    fn test_dsu() {
+        let mut dsu = Dsu::new(6);
+        assert_eq!(dsu.set_count(), 6);
+
+        assert!(dsu.union(0, 1));
+        assert!(dsu.union(1, 2));
+        assert!(dsu.connected(0, 2));
+        assert!(!dsu.connected(0, 3));
+        assert_eq!(dsu.set_count(), 4);
+
+        // Already connected
+        assert!(!dsu.union(0, 2));
+        assert_eq!(dsu.set_count(), 4);
+
+        assert!(dsu.union(3, 4));
+        assert!(dsu.union(4, 5));
+        assert_eq!(dsu.set_count(), 2);
+
+        // Merge components
+        assert!(dsu.union(2, 4));
+        assert_eq!(dsu.set_count(), 1);
+        assert!(dsu.connected(0, 5));
     }
 }
