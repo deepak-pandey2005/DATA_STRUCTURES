@@ -14,6 +14,7 @@ In-depth conceptual guides with memory layouts, time/space complexity, diagrams,
 - [Stack](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/stack.md) - LIFO mechanics, vector backing, expression evaluation.
 - [Queue](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/queue.md) - FIFO mechanics, dynamic circular ring-buffer wrapping.
 - [Binary Search Tree (BST)](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/binary_search_tree.md) - Hierarchical search invariant, 3-case node deletion, in-order sorted traversal.
+- [Binary Heap (Priority Queue)](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/heap.md) - Complete binary tree, array indexing, logarithmic sift-up/down, $O(n)$ bottom-up heapify.
 
 ---
 

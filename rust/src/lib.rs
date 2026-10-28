@@ -4,6 +4,7 @@ pub mod doubly_linked_list;
 pub mod stack;
 pub mod queue;
 pub mod bst;
+pub mod heap;
 
 pub use vector::MyVec;
 pub use singly_linked_list::SinglyLinkedList;
@@ -11,6 +12,7 @@ pub use doubly_linked_list::DoublyLinkedList;
 pub use stack::Stack;
 pub use queue::Queue;
 pub use bst::BinarySearchTree;
+pub use heap::BinaryHeap;
 
 #[cfg(test)]
 mod tests {
@@ -139,5 +141,30 @@ mod tests {
 
         let inorder_after: Vec<i32> = bst.inorder().into_iter().copied().collect();
         assert_eq!(inorder_after, vec![30, 40, 60, 70, 80]);
+    }
+
+    #[test]
+    fn test_heap() {
+        let mut heap = BinaryHeap::new();
+        assert!(heap.is_empty());
+
+        let nums = vec![15, 10, 20, 8, 12, 25, 30];
+        for n in &nums {
+            heap.push(*n);
+        }
+        assert_eq!(heap.len(), 7);
+        assert_eq!(heap.peek(), Some(&30));
+
+        let mut prev = 1000;
+        while let Some(top) = heap.pop() {
+            assert!(top <= prev);
+            prev = top;
+        }
+        assert!(heap.is_empty());
+
+        // Test heapify from vector
+        let heap2 = BinaryHeap::from(nums);
+        assert_eq!(heap2.len(), 7);
+        assert_eq!(heap2.peek(), Some(&30));
     }
 }

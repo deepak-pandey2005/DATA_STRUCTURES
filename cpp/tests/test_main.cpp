@@ -8,6 +8,7 @@
 #include "Stack.hpp"
 #include "Queue.hpp"
 #include "BinarySearchTree.hpp"
+#include "BinaryHeap.hpp"
 
 static int g_cpp_tests_passed = 0;
 
@@ -251,6 +252,40 @@ void test_bst_cpp() {
     CPP_TEST_ASSERT(bst_copy.contains(70));
 }
 
+void test_heap_cpp() {
+    // Max-heap test (default)
+    ds::BinaryHeap<int> max_heap;
+    CPP_TEST_ASSERT(max_heap.empty());
+
+    std::vector<int> vals = {15, 10, 20, 8, 12, 25, 30};
+    for (int v : vals) {
+        max_heap.push(v);
+    }
+    CPP_TEST_ASSERT(max_heap.size() == 7);
+    CPP_TEST_ASSERT(max_heap.top() == 30);
+
+    int prev = 1000;
+    while (!max_heap.empty()) {
+        int curr = max_heap.top();
+        CPP_TEST_ASSERT(curr <= prev);
+        prev = curr;
+        max_heap.pop();
+    }
+
+    // Min-heap test with std::greater
+    ds::BinaryHeap<int, std::greater<int>> min_heap(vals.begin(), vals.end());
+    CPP_TEST_ASSERT(min_heap.size() == 7);
+    CPP_TEST_ASSERT(min_heap.top() == 8);
+
+    prev = -1;
+    while (!min_heap.empty()) {
+        int curr = min_heap.top();
+        CPP_TEST_ASSERT(curr >= prev);
+        prev = curr;
+        min_heap.pop();
+    }
+}
+
 int main() {
     std::cout << "==========================================\n";
     std::cout << "   Running C++ Data Structures Test Suite \n";
@@ -262,6 +297,7 @@ int main() {
     RUN_CPP_TEST(test_stack_cpp);
     RUN_CPP_TEST(test_queue_cpp);
     RUN_CPP_TEST(test_bst_cpp);
+    RUN_CPP_TEST(test_heap_cpp);
 
     std::cout << "\nAll " << g_cpp_tests_passed << " C++ tests passed successfully!\n";
     return 0;

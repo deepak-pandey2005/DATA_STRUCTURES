@@ -7,6 +7,7 @@ CFLAGS = -Wall -Wextra -pedantic -std=c11 \
          -Istack/include \
          -Iqueue/include \
          -Ibst/include \
+         -Iheap/include \
          -g
 
 SRCS = vector/src/vector.c \
@@ -14,7 +15,8 @@ SRCS = vector/src/vector.c \
        doubly_linked_list/src/doubly_linked_list.c \
        stack/src/stack.c \
        queue/src/queue.c \
-       bst/src/bst.c
+       bst/src/bst.c \
+       heap/src/heap.c
 
 TEST_SRCS = tests/test_runner.c $(SRCS)
 TEST_BIN = bin/test_runner

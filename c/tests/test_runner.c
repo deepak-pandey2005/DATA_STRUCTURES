@@ -7,6 +7,7 @@
 #include "stack.h"
 #include "queue.h"
 #include "bst.h"
+#include "heap.h"
 
 static int g_tests_passed = 0;
 
@@ -208,6 +209,68 @@ void test_bst() {
     TEST_ASSERT(bst_is_empty(&tree));
 }
 
+/* --- Binary Heap Tests --- */
+static int int_min_cmp(const void *a, const void *b) {
+    int ia = *(const int *)a;
+    int ib = *(const int *)b;
+    return (ia > ib) - (ia < ib);
+}
+
+static int int_max_cmp(const void *a, const void *b) {
+    int ia = *(const int *)a;
+    int ib = *(const int *)b;
+    return (ib > ia) - (ib < ia);
+}
+
+void test_heap() {
+    BinaryHeap min_heap;
+    TEST_ASSERT(heap_init(&min_heap, sizeof(int), 4, int_min_cmp) == DS_SUCCESS);
+    TEST_ASSERT(heap_is_empty(&min_heap));
+
+    int values[] = {45, 20, 14, 12, 31, 7, 11, 13, 7};
+    int n = sizeof(values) / sizeof(values[0]);
+
+    for (int i = 0; i < n; i++) {
+        TEST_ASSERT(heap_push(&min_heap, &values[i]) == DS_SUCCESS);
+    }
+    TEST_ASSERT(heap_size(&min_heap) == (size_t)n);
+
+    int top = 0;
+    TEST_ASSERT(heap_peek(&min_heap, &top) == DS_SUCCESS);
+    TEST_ASSERT(top == 7);
+
+    // Extract all elements and verify ascending order
+    int prev = -1;
+    for (int i = 0; i < n; i++) {
+        int curr = 0;
+        TEST_ASSERT(heap_pop(&min_heap, &curr) == DS_SUCCESS);
+        if (i > 0) {
+            TEST_ASSERT(curr >= prev);
+        }
+        prev = curr;
+    }
+    TEST_ASSERT(heap_is_empty(&min_heap));
+    heap_destroy(&min_heap);
+
+    // Test Max-Heap
+    BinaryHeap max_heap;
+    TEST_ASSERT(heap_init(&max_heap, sizeof(int), 4, int_max_cmp) == DS_SUCCESS);
+    for (int i = 0; i < n; i++) {
+        TEST_ASSERT(heap_push(&max_heap, &values[i]) == DS_SUCCESS);
+    }
+    TEST_ASSERT(heap_peek(&max_heap, &top) == DS_SUCCESS);
+    TEST_ASSERT(top == 45);
+
+    prev = 1000;
+    for (int i = 0; i < n; i++) {
+        int curr = 0;
+        TEST_ASSERT(heap_pop(&max_heap, &curr) == DS_SUCCESS);
+        TEST_ASSERT(curr <= prev);
+        prev = curr;
+    }
+    heap_destroy(&max_heap);
+}
+
 int main(void) {
     printf("========================================\n");
     printf("   Running C Data Structures Test Suite \n");
@@ -219,6 +282,7 @@ int main(void) {
     RUN_TEST(test_stack);
     RUN_TEST(test_queue);
     RUN_TEST(test_bst);
+    RUN_TEST(test_heap);
 
     printf("\nAll %d C tests passed successfully!\n", g_tests_passed);
     return 0;
