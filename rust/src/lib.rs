@@ -8,6 +8,7 @@ pub mod heap;
 pub mod hash_table;
 pub mod trie;
 pub mod dsu;
+pub mod avl_tree;
 
 pub use vector::MyVec;
 pub use singly_linked_list::SinglyLinkedList;
@@ -19,6 +20,7 @@ pub use heap::BinaryHeap;
 pub use hash_table::HashTable;
 pub use trie::Trie;
 pub use dsu::Dsu;
+pub use avl_tree::AvlTree;
 
 #[cfg(test)]
 mod tests {
@@ -256,5 +258,32 @@ mod tests {
         assert!(dsu.union(2, 4));
         assert_eq!(dsu.set_count(), 1);
         assert!(dsu.connected(0, 5));
+    }
+
+    #[test]
+    fn test_avl_tree() {
+        let mut avl = AvlTree::new();
+        assert!(avl.is_empty());
+
+        let vals = [10, 20, 30, 40, 50, 25, 5];
+        for v in vals {
+            assert!(avl.insert(v));
+        }
+        assert!(!avl.insert(20)); // duplicate
+        assert_eq!(avl.len(), 7);
+        assert!(avl.height() <= 4); // strictly logarithmic balance!
+
+        assert!(avl.contains(&25));
+        assert!(avl.contains(&10));
+        assert!(!avl.contains(&999));
+
+        let inorder = avl.inorder();
+        assert_eq!(inorder, vec![5, 10, 20, 25, 30, 40, 50]);
+
+        // Remove node with rotation rebalance
+        assert!(avl.remove(&30));
+        assert!(!avl.contains(&30));
+        assert_eq!(avl.len(), 6);
+        assert!(avl.height() <= 4);
     }
 }

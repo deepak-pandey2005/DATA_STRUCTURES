@@ -11,6 +11,7 @@
 #include "hash_table.h"
 #include "trie.h"
 #include "dsu.h"
+#include "avl_tree.h"
 
 static int g_tests_passed = 0;
 
@@ -381,6 +382,51 @@ void test_dsu() {
     dsu_destroy(&dsu);
 }
 
+/* --- AVL Tree Tests --- */
+static int g_avl_arr[32];
+static size_t g_avl_idx = 0;
+static void avl_collect_inorder(int key) {
+    if (g_avl_idx < 32) {
+        g_avl_arr[g_avl_idx++] = key;
+    }
+}
+
+void test_avl() {
+    AVLTree tree;
+    TEST_ASSERT(avl_init(&tree) == DS_SUCCESS);
+    TEST_ASSERT(avl_is_empty(&tree));
+
+    // Insert keys sequentially to trigger rotations
+    // Sequential insertions in normal BST would create skewed line of height 7
+    int keys[] = {10, 20, 30, 40, 50, 25, 5};
+    for (int i = 0; i < 7; i++) {
+        TEST_ASSERT(avl_insert(&tree, keys[i]) == DS_SUCCESS);
+    }
+    TEST_ASSERT(avl_size(&tree) == 7);
+    TEST_ASSERT(avl_height(&tree) <= 4); // AVL guaranteed logarithmic balance!
+
+    TEST_ASSERT(avl_search(&tree, 25));
+    TEST_ASSERT(avl_search(&tree, 10));
+    TEST_ASSERT(!avl_search(&tree, 999));
+
+    // Verify in-order traversal is sorted
+    g_avl_idx = 0;
+    avl_inorder(&tree, avl_collect_inorder);
+    TEST_ASSERT(g_avl_idx == 7);
+    for (size_t i = 1; i < g_avl_idx; i++) {
+        TEST_ASSERT(g_avl_arr[i] > g_avl_arr[i - 1]);
+    }
+
+    // Delete node and verify self-balancing remains intact
+    TEST_ASSERT(avl_delete(&tree, 30) == DS_SUCCESS);
+    TEST_ASSERT(!avl_search(&tree, 30));
+    TEST_ASSERT(avl_size(&tree) == 6);
+    TEST_ASSERT(avl_height(&tree) <= 4);
+
+    avl_destroy(&tree);
+    TEST_ASSERT(avl_is_empty(&tree));
+}
+
 int main(void) {
     printf("========================================\n");
     printf("   Running C Data Structures Test Suite \n");
@@ -396,6 +442,7 @@ int main(void) {
     RUN_TEST(test_hash_table);
     RUN_TEST(test_trie);
     RUN_TEST(test_dsu);
+    RUN_TEST(test_avl);
 
     printf("\nAll %d C tests passed successfully!\n", g_tests_passed);
     return 0;

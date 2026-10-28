@@ -12,6 +12,7 @@
 #include "HashTable.hpp"
 #include "Trie.hpp"
 #include "DSU.hpp"
+#include "AVLTree.hpp"
 
 static int g_cpp_tests_passed = 0;
 
@@ -370,6 +371,39 @@ void test_dsu_cpp() {
     CPP_TEST_ASSERT(dsu.connected(0, 4));
 }
 
+void test_avl_tree_cpp() {
+    ds::AVLTree<int> avl;
+    CPP_TEST_ASSERT(avl.empty());
+
+    std::vector<int> vals = {10, 20, 30, 40, 50, 25, 5};
+    for (int v : vals) {
+        CPP_TEST_ASSERT(avl.insert(v));
+    }
+    CPP_TEST_ASSERT(!avl.insert(20)); // duplicate
+    CPP_TEST_ASSERT(avl.size() == 7);
+    CPP_TEST_ASSERT(avl.height() <= 4); // self-balancing bound
+
+    CPP_TEST_ASSERT(avl.contains(25));
+    CPP_TEST_ASSERT(avl.contains(10));
+    CPP_TEST_ASSERT(!avl.contains(999));
+
+    auto inorder = avl.inorder();
+    CPP_TEST_ASSERT(inorder.size() == 7);
+    for (std::size_t i = 1; i < inorder.size(); ++i) {
+        CPP_TEST_ASSERT(inorder[i] > inorder[i - 1]);
+    }
+
+    CPP_TEST_ASSERT(avl.remove(30));
+    CPP_TEST_ASSERT(!avl.contains(30));
+    CPP_TEST_ASSERT(avl.size() == 6);
+    CPP_TEST_ASSERT(avl.height() <= 4);
+
+    // Deep copy test
+    ds::AVLTree<int> copy = avl;
+    CPP_TEST_ASSERT(copy.size() == 6);
+    CPP_TEST_ASSERT(copy.contains(25));
+}
+
 int main() {
     std::cout << "==========================================\n";
     std::cout << "   Running C++ Data Structures Test Suite \n";
@@ -385,6 +419,7 @@ int main() {
     RUN_CPP_TEST(test_hash_table_cpp);
     RUN_CPP_TEST(test_trie_cpp);
     RUN_CPP_TEST(test_dsu_cpp);
+    RUN_CPP_TEST(test_avl_tree_cpp);
 
     std::cout << "\nAll " << g_cpp_tests_passed << " C++ tests passed successfully!\n";
     return 0;

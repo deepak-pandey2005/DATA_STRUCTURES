@@ -18,6 +18,7 @@ In-depth conceptual guides with memory layouts, time/space complexity, diagrams,
 - [Hash Table (Separate Chaining)](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/hash_table.md) - Associative mapping, FNV-1a hashing, collision chains, dynamic rehashing ($\alpha \ge 0.75$).
 - [Trie (Prefix Tree)](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/trie.md) - Re**trie**val tree, direct alphabet branching ($O(L)$), prefix search, and recursive pruning.
 - [Disjoint Set Union (Union-Find / DSU)](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/dsu.md) - Near $O(1)$ ($\alpha(n)$) disjoint set tracking via path compression and union by rank.
+- [AVL Tree (Self-Balancing BST)](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/avl_tree.md) - Guaranteed $O(\log n)$ worst-case operations via balance factor caching and LL/RR/LR/RL tree rotations.
 
 ---
 
