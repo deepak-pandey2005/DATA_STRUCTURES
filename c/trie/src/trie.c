@@ -145,3 +145,4 @@ size_t trie_size(const Trie *trie) {
 bool trie_is_empty(const Trie *trie) {
     return !trie || trie->word_count == 0;
 }
+

@@ -74,3 +74,4 @@ bool trie_is_empty(const Trie *trie);
 #endif
 
 #endif // DS_TRIE_H
+

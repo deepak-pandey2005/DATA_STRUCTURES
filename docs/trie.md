@@ -50,3 +50,4 @@ Where $\Sigma$ is the alphabet size ($\Sigma = 26$).
 - **C (`c/trie/`)**: Fixed 26-pointer array per node for $O(1)$ direct child indexing (`c - 'a'`) with recursive post-order destructor.
 - **C++ (`cpp/trie/`)**: `Trie` class utilizing `std::unique_ptr` arrays for memory safety and zero leaks under exceptions.
 - **Rust (`rust/src/trie/`)**: Idiomatic Rust implementation with nested `Option<Box<TrieNode>>` fixed arrays.
+
