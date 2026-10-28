@@ -1,12 +1,19 @@
 CXX = g++
-CXXFLAGS = -Wall -Wextra -Wpedantic -std=c++20 -Iinclude -g
+CXXFLAGS = -Wall -Wextra -Wpedantic -std=c++20 \
+           -Ivector/include \
+           -Isingly_linked_list/include \
+           -Idoubly_linked_list/include \
+           -Istack/include \
+           -Iqueue/include \
+           -Ibst/include \
+           -g
 
-SRCS = src/Vector.cpp \
-       src/SinglyLinkedList.cpp \
-       src/DoublyLinkedList.cpp \
-       src/Stack.cpp \
-       src/Queue.cpp \
-       src/BinarySearchTree.cpp
+SRCS = vector/src/Vector.cpp \
+       singly_linked_list/src/SinglyLinkedList.cpp \
+       doubly_linked_list/src/DoublyLinkedList.cpp \
+       stack/src/Stack.cpp \
+       queue/src/Queue.cpp \
+       bst/src/BinarySearchTree.cpp
 
 TEST_SRCS = tests/test_main.cpp $(SRCS)
 BIN = bin/test_runner

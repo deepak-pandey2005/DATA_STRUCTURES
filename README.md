@@ -30,19 +30,35 @@ DATA_STRUCTURES/
 │   ├── stack.md
 │   ├── queue.md
 │   └── binary_search_tree.md
-├── c/                          # C11 implementation (manual memory, defensive pointers)
+├── c/                          # C11 implementations (isolated per data structure)
 │   ├── Makefile
-│   ├── include/                # Header files (vector.h, bst.h, etc.)
-│   ├── src/                    # Source implementations
-│   └── tests/                  # Test suite runner (test_runner.c)
-├── cpp/                        # Modern C++20 (Templates, RAII, Move Semantics, Iterators)
+│   ├── common/include/         # Shared status/error codes (common.h)
+│   ├── vector/                 # include/, src/
+│   ├── singly_linked_list/     # include/, src/
+│   ├── doubly_linked_list/     # include/, src/
+│   ├── stack/                  # include/, src/
+│   ├── queue/                  # include/, src/
+│   ├── bst/                    # include/, src/
+│   └── tests/                  # Unified C test runner (test_runner.c)
+├── cpp/                        # Modern C++20 (isolated per data structure)
 │   ├── Makefile
-│   ├── include/                # Header declarations (Vector.hpp, BST.hpp, etc.)
-│   ├── src/                    # Compiled implementation translation units
-│   └── tests/                  # Test suite (test_main.cpp)
-└── rust/                       # Safe Rust (Ownership, Option/Result, Traits, Drop)
+│   ├── vector/                 # include/, src/
+│   ├── singly_linked_list/     # include/, src/
+│   ├── doubly_linked_list/     # include/, src/
+│   ├── stack/                  # include/, src/
+│   ├── queue/                  # include/, src/
+│   ├── bst/                    # include/, src/
+│   └── tests/                  # Unified C++ test runner (test_main.cpp)
+└── rust/                       # Safe Rust (isolated module subdirectories)
     ├── Cargo.toml
-    └── src/                    # Library modules & unit test suite
+    └── src/
+        ├── lib.rs              # Root crate exports & unit tests
+        ├── vector/mod.rs
+        ├── singly_linked_list/mod.rs
+        ├── doubly_linked_list/mod.rs
+        ├── stack/mod.rs
+        ├── queue/mod.rs
+        └── bst/mod.rs
 ```
 
 ---

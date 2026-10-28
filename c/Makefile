@@ -1,12 +1,20 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -pedantic -std=c11 -Iinclude -g
+CFLAGS = -Wall -Wextra -pedantic -std=c11 \
+         -Icommon/include \
+         -Ivector/include \
+         -Isingly_linked_list/include \
+         -Idoubly_linked_list/include \
+         -Istack/include \
+         -Iqueue/include \
+         -Ibst/include \
+         -g
 
-SRCS = src/vector.c \
-       src/singly_linked_list.c \
-       src/doubly_linked_list.c \
-       src/stack.c \
-       src/queue.c \
-       src/bst.c
+SRCS = vector/src/vector.c \
+       singly_linked_list/src/singly_linked_list.c \
+       doubly_linked_list/src/doubly_linked_list.c \
+       stack/src/stack.c \
+       queue/src/queue.c \
+       bst/src/bst.c
 
 TEST_SRCS = tests/test_runner.c $(SRCS)
 TEST_BIN = bin/test_runner
