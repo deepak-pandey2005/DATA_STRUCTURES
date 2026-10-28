@@ -5,6 +5,7 @@ pub mod stack;
 pub mod queue;
 pub mod bst;
 pub mod heap;
+pub mod hash_table;
 
 pub use vector::MyVec;
 pub use singly_linked_list::SinglyLinkedList;
@@ -13,6 +14,7 @@ pub use stack::Stack;
 pub use queue::Queue;
 pub use bst::BinarySearchTree;
 pub use heap::BinaryHeap;
+pub use hash_table::HashTable;
 
 #[cfg(test)]
 mod tests {
@@ -166,5 +168,37 @@ mod tests {
         let heap2 = BinaryHeap::from(nums);
         assert_eq!(heap2.len(), 7);
         assert_eq!(heap2.peek(), Some(&30));
+    }
+
+    #[test]
+    fn test_hash_table() {
+        let mut map = HashTable::with_capacity(4);
+        assert!(map.is_empty());
+
+        map.insert("apple".to_string(), 10);
+        map.insert("banana".to_string(), 20);
+        map.insert("cherry".to_string(), 30);
+        map.insert("date".to_string(), 40);
+
+        assert_eq!(map.len(), 4);
+        assert_eq!(map.get("banana"), Some(&20));
+        assert!(map.contains_key("apple"));
+        assert!(!map.contains_key("grape"));
+
+        // Update
+        let old = map.insert("banana".to_string(), 200);
+        assert_eq!(old, Some(20));
+        assert_eq!(map.get("banana"), Some(&200));
+
+        // Mutable access
+        if let Some(val) = map.get_mut("date") {
+            *val += 5;
+        }
+        assert_eq!(map.get("date"), Some(&45));
+
+        // Remove
+        assert_eq!(map.remove("cherry"), Some(30));
+        assert!(!map.contains_key("cherry"));
+        assert_eq!(map.len(), 3);
     }
 }

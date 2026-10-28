@@ -8,6 +8,7 @@
 #include "queue.h"
 #include "bst.h"
 #include "heap.h"
+#include "hash_table.h"
 
 static int g_tests_passed = 0;
 
@@ -271,6 +272,43 @@ void test_heap() {
     heap_destroy(&max_heap);
 }
 
+/* --- Hash Table Tests --- */
+void test_hash_table() {
+    HashTable ht;
+    TEST_ASSERT(ht_init(&ht, 4) == DS_SUCCESS);
+    TEST_ASSERT(ht_is_empty(&ht));
+
+    int val1 = 10, val2 = 20, val3 = 30, val4 = 40, val5 = 50;
+    TEST_ASSERT(ht_insert(&ht, "alpha", &val1) == DS_SUCCESS);
+    TEST_ASSERT(ht_insert(&ht, "beta", &val2) == DS_SUCCESS);
+    TEST_ASSERT(ht_insert(&ht, "gamma", &val3) == DS_SUCCESS);
+    TEST_ASSERT(ht_insert(&ht, "delta", &val4) == DS_SUCCESS);
+    TEST_ASSERT(ht_insert(&ht, "epsilon", &val5) == DS_SUCCESS);
+
+    TEST_ASSERT(ht_size(&ht) == 5);
+    TEST_ASSERT(ht_contains(&ht, "alpha"));
+    TEST_ASSERT(ht_contains(&ht, "gamma"));
+    TEST_ASSERT(!ht_contains(&ht, "zeta"));
+
+    void *ret = NULL;
+    TEST_ASSERT(ht_get(&ht, "alpha", &ret) == DS_SUCCESS && *(int *)ret == 10);
+    TEST_ASSERT(ht_get(&ht, "epsilon", &ret) == DS_SUCCESS && *(int *)ret == 50);
+
+    // Update existing key
+    int updated_val = 999;
+    TEST_ASSERT(ht_insert(&ht, "beta", &updated_val) == DS_SUCCESS);
+    TEST_ASSERT(ht_get(&ht, "beta", &ret) == DS_SUCCESS && *(int *)ret == 999);
+    TEST_ASSERT(ht_size(&ht) == 5);
+
+    // Remove key
+    TEST_ASSERT(ht_remove(&ht, "gamma", &ret) == DS_SUCCESS && *(int *)ret == 30);
+    TEST_ASSERT(!ht_contains(&ht, "gamma"));
+    TEST_ASSERT(ht_size(&ht) == 4);
+
+    ht_destroy(&ht, NULL);
+    TEST_ASSERT(ht_is_empty(&ht));
+}
+
 int main(void) {
     printf("========================================\n");
     printf("   Running C Data Structures Test Suite \n");
@@ -283,6 +321,7 @@ int main(void) {
     RUN_TEST(test_queue);
     RUN_TEST(test_bst);
     RUN_TEST(test_heap);
+    RUN_TEST(test_hash_table);
 
     printf("\nAll %d C tests passed successfully!\n", g_tests_passed);
     return 0;

@@ -9,6 +9,7 @@
 #include "Queue.hpp"
 #include "BinarySearchTree.hpp"
 #include "BinaryHeap.hpp"
+#include "HashTable.hpp"
 
 static int g_cpp_tests_passed = 0;
 
@@ -286,6 +287,38 @@ void test_heap_cpp() {
     }
 }
 
+void test_hash_table_cpp() {
+    ds::HashTable<std::string, int> map(4);
+    CPP_TEST_ASSERT(map.empty());
+
+    map.insert_or_assign("alpha", 10);
+    map.insert_or_assign("beta", 20);
+    map.insert_or_assign("gamma", 30);
+    map.insert_or_assign("delta", 40);
+    map.insert_or_assign("epsilon", 50);
+
+    CPP_TEST_ASSERT(map.size() == 5);
+    CPP_TEST_ASSERT(map.contains("alpha"));
+    CPP_TEST_ASSERT(map.contains("delta"));
+    CPP_TEST_ASSERT(!map.contains("omega"));
+
+    CPP_TEST_ASSERT(*map.find("beta") == 20);
+
+    // Operator[] retrieval and default insert
+    CPP_TEST_ASSERT(map["gamma"] == 30);
+    map["gamma"] = 300;
+    CPP_TEST_ASSERT(map["gamma"] == 300);
+
+    map["new_key"] = 42;
+    CPP_TEST_ASSERT(map.size() == 6);
+    CPP_TEST_ASSERT(map["new_key"] == 42);
+
+    // Erase
+    CPP_TEST_ASSERT(map.erase("beta"));
+    CPP_TEST_ASSERT(!map.contains("beta"));
+    CPP_TEST_ASSERT(map.size() == 5);
+}
+
 int main() {
     std::cout << "==========================================\n";
     std::cout << "   Running C++ Data Structures Test Suite \n";
@@ -298,6 +331,7 @@ int main() {
     RUN_CPP_TEST(test_queue_cpp);
     RUN_CPP_TEST(test_bst_cpp);
     RUN_CPP_TEST(test_heap_cpp);
+    RUN_CPP_TEST(test_hash_table_cpp);
 
     std::cout << "\nAll " << g_cpp_tests_passed << " C++ tests passed successfully!\n";
     return 0;
