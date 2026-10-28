@@ -63,3 +63,4 @@ If an insertion or deletion causes $\text{Balance Factor}(x) \notin \{-1, 0, +1\
 - **C (`c/avl_tree/`)**: Pointer-based node tree with cached `int height`, explicit rotations, in-order traversal, and recursive memory release.
 - **C++ (`cpp/avl_tree/`)**: Templated `AVLTree<T>` with copy constructors, move semantics, and RAII node destruction.
 - **Rust (`rust/src/avl_tree/`)**: Safe Rust implementation using `Option<Box<AvlNode<T>>>` with height caching and rotation mechanics.
+
