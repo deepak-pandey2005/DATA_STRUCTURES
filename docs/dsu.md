@@ -49,3 +49,4 @@ Here $\alpha(n)$ is the **Inverse Ackermann Function**, which grows so slowly th
 - **Kruskal's Algorithm:** Efficient Minimum Spanning Tree (MST) computation by preventing edge cycles.
 - **Dynamic Graph Connectivity:** Checking whether two vertices are connected in an undirected graph under online edge additions.
 - **Percolation & Clustering:** Grid clustering and connected component labeling in image processing.
+

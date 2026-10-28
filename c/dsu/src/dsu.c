@@ -101,3 +101,4 @@ bool dsu_connected(DSU *dsu, size_t x, size_t y) {
 size_t dsu_set_count(const DSU *dsu) {
     return dsu ? dsu->num_sets : 0;
 }
+
