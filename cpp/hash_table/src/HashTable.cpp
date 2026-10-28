@@ -11,3 +11,4 @@ namespace ds {
     template class HashTable<int, int>;
     template class HashTable<std::string, std::string>;
 }
+

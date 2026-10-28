@@ -47,3 +47,4 @@ Buckets (Array of Heads):
 - **C (`c/hash_table/`)**: String-key associative table with FNV-1a hashing, heap-allocated dynamic bucket resizing, and clean memory cleanup.
 - **C++ (`cpp/hash_table/`)**: Templated `HashTable<Key, Value, Hash>` using modern move semantics, forward iterators, and custom hashers.
 - **Rust (`rust/src/hash_table/`)**: Generic `HashTable<K: Hash + Eq, V>` safe chaining implementation with automated bucket expansion.
+
