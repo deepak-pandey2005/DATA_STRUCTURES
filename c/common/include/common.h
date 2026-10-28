@@ -11,7 +11,8 @@ typedef enum {
     DS_ERR_EMPTY = -3,
     DS_ERR_OUT_OF_BOUNDS = -4,
     DS_ERR_NOT_FOUND = -5,
-    DS_ERR_DUPLICATE = -6
+    DS_ERR_DUPLICATE = -6,
+    DS_ERR_INVALID_ARG = -7
 } ds_status_t;
 
 #endif /* DS_COMMON_H */

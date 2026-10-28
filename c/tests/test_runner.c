@@ -9,6 +9,7 @@
 #include "bst.h"
 #include "heap.h"
 #include "hash_table.h"
+#include "trie.h"
 
 static int g_tests_passed = 0;
 
@@ -309,6 +310,41 @@ void test_hash_table() {
     TEST_ASSERT(ht_is_empty(&ht));
 }
 
+/* --- Trie Tests --- */
+void test_trie() {
+    Trie trie;
+    TEST_ASSERT(trie_init(&trie) == DS_SUCCESS);
+    TEST_ASSERT(trie_is_empty(&trie));
+
+    TEST_ASSERT(trie_insert(&trie, "apple") == DS_SUCCESS);
+    TEST_ASSERT(trie_insert(&trie, "app") == DS_SUCCESS);
+    TEST_ASSERT(trie_insert(&trie, "application") == DS_SUCCESS);
+    TEST_ASSERT(trie_insert(&trie, "bat") == DS_SUCCESS);
+    TEST_ASSERT(trie_insert(&trie, "batch") == DS_SUCCESS);
+
+    TEST_ASSERT(trie_size(&trie) == 5);
+    TEST_ASSERT(trie_search(&trie, "apple"));
+    TEST_ASSERT(trie_search(&trie, "app"));
+    TEST_ASSERT(trie_search(&trie, "bat"));
+    TEST_ASSERT(!trie_search(&trie, "appl"));
+    TEST_ASSERT(!trie_search(&trie, "cat"));
+
+    // Prefix search
+    TEST_ASSERT(trie_starts_with(&trie, "app"));
+    TEST_ASSERT(trie_starts_with(&trie, "applic"));
+    TEST_ASSERT(trie_starts_with(&trie, "bat"));
+    TEST_ASSERT(!trie_starts_with(&trie, "xyz"));
+
+    // Removal
+    TEST_ASSERT(trie_remove(&trie, "app") == DS_SUCCESS);
+    TEST_ASSERT(!trie_search(&trie, "app"));
+    TEST_ASSERT(trie_search(&trie, "apple")); // child still exists
+    TEST_ASSERT(trie_size(&trie) == 4);
+
+    trie_destroy(&trie);
+    TEST_ASSERT(trie_is_empty(&trie));
+}
+
 int main(void) {
     printf("========================================\n");
     printf("   Running C Data Structures Test Suite \n");
@@ -322,6 +358,7 @@ int main(void) {
     RUN_TEST(test_bst);
     RUN_TEST(test_heap);
     RUN_TEST(test_hash_table);
+    RUN_TEST(test_trie);
 
     printf("\nAll %d C tests passed successfully!\n", g_tests_passed);
     return 0;

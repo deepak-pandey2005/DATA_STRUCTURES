@@ -16,6 +16,7 @@ In-depth conceptual guides with memory layouts, time/space complexity, diagrams,
 - [Binary Search Tree (BST)](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/binary_search_tree.md) - Hierarchical search invariant, 3-case node deletion, in-order sorted traversal.
 - [Binary Heap (Priority Queue)](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/heap.md) - Complete binary tree, array indexing, logarithmic sift-up/down, $O(n)$ bottom-up heapify.
 - [Hash Table (Separate Chaining)](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/hash_table.md) - Associative mapping, FNV-1a hashing, collision chains, dynamic rehashing ($\alpha \ge 0.75$).
+- [Trie (Prefix Tree)](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/trie.md) - Re**trie**val tree, direct alphabet branching ($O(L)$), prefix search, and recursive pruning.
 
 ---
 

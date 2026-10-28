@@ -6,6 +6,7 @@ pub mod queue;
 pub mod bst;
 pub mod heap;
 pub mod hash_table;
+pub mod trie;
 
 pub use vector::MyVec;
 pub use singly_linked_list::SinglyLinkedList;
@@ -15,6 +16,7 @@ pub use queue::Queue;
 pub use bst::BinarySearchTree;
 pub use heap::BinaryHeap;
 pub use hash_table::HashTable;
+pub use trie::Trie;
 
 #[cfg(test)]
 mod tests {
@@ -200,5 +202,32 @@ mod tests {
         assert_eq!(map.remove("cherry"), Some(30));
         assert!(!map.contains_key("cherry"));
         assert_eq!(map.len(), 3);
+    }
+
+    #[test]
+    fn test_trie() {
+        let mut trie = Trie::new();
+        assert!(trie.is_empty());
+
+        assert!(trie.insert("banana"));
+        assert!(trie.insert("band"));
+        assert!(trie.insert("banner"));
+        assert!(!trie.insert("banana")); // duplicate
+
+        assert_eq!(trie.len(), 3);
+        assert!(trie.search("banana"));
+        assert!(trie.search("band"));
+        assert!(!trie.search("ban"));
+
+        // Prefix
+        assert!(trie.starts_with("ban"));
+        assert!(trie.starts_with("band"));
+        assert!(!trie.starts_with("zoo"));
+
+        // Removal
+        assert!(trie.remove("band"));
+        assert!(!trie.search("band"));
+        assert!(trie.search("banana"));
+        assert_eq!(trie.len(), 2);
     }
 }

@@ -10,6 +10,7 @@
 #include "BinarySearchTree.hpp"
 #include "BinaryHeap.hpp"
 #include "HashTable.hpp"
+#include "Trie.hpp"
 
 static int g_cpp_tests_passed = 0;
 
@@ -319,6 +320,32 @@ void test_hash_table_cpp() {
     CPP_TEST_ASSERT(map.size() == 5);
 }
 
+void test_trie_cpp() {
+    ds::Trie trie;
+    CPP_TEST_ASSERT(trie.empty());
+
+    CPP_TEST_ASSERT(trie.insert("banana"));
+    CPP_TEST_ASSERT(trie.insert("band"));
+    CPP_TEST_ASSERT(trie.insert("banner"));
+    CPP_TEST_ASSERT(!trie.insert("banana")); // duplicate
+
+    CPP_TEST_ASSERT(trie.size() == 3);
+    CPP_TEST_ASSERT(trie.search("banana"));
+    CPP_TEST_ASSERT(trie.search("band"));
+    CPP_TEST_ASSERT(!trie.search("ban"));
+
+    // Prefix search
+    CPP_TEST_ASSERT(trie.starts_with("ban"));
+    CPP_TEST_ASSERT(trie.starts_with("band"));
+    CPP_TEST_ASSERT(!trie.starts_with("cat"));
+
+    // Removal
+    CPP_TEST_ASSERT(trie.remove("band"));
+    CPP_TEST_ASSERT(!trie.search("band"));
+    CPP_TEST_ASSERT(trie.search("banana"));
+    CPP_TEST_ASSERT(trie.size() == 2);
+}
+
 int main() {
     std::cout << "==========================================\n";
     std::cout << "   Running C++ Data Structures Test Suite \n";
@@ -332,6 +359,7 @@ int main() {
     RUN_CPP_TEST(test_bst_cpp);
     RUN_CPP_TEST(test_heap_cpp);
     RUN_CPP_TEST(test_hash_table_cpp);
+    RUN_CPP_TEST(test_trie_cpp);
 
     std::cout << "\nAll " << g_cpp_tests_passed << " C++ tests passed successfully!\n";
     return 0;

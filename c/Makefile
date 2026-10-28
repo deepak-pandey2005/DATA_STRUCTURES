@@ -9,6 +9,7 @@ CFLAGS = -Wall -Wextra -pedantic -std=c11 \
          -Ibst/include \
          -Iheap/include \
          -Ihash_table/include \
+         -Itrie/include \
          -g
 
 SRCS = vector/src/vector.c \
@@ -18,7 +19,8 @@ SRCS = vector/src/vector.c \
        queue/src/queue.c \
        bst/src/bst.c \
        heap/src/heap.c \
-       hash_table/src/hash_table.c
+       hash_table/src/hash_table.c \
+       trie/src/trie.c
 
 TEST_SRCS = tests/test_runner.c $(SRCS)
 TEST_BIN = bin/test_runner
