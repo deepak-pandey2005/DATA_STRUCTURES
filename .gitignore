@@ -1,0 +1,22 @@
+# C build artifacts
+c/bin/
+*.o
+*.out
+
+# C++ build artifacts
+cpp/build/
+cpp/bin/
+CMakeCache.txt
+CMakeFiles/
+
+# Rust build artifacts
+rust/target/
+**/*.rs.bk
+Cargo.lock
+
+# Editor & OS files
+.DS_Store
+*.swp
+*~
+.vscode/
+.idea/
