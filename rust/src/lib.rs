@@ -1,28 +1,28 @@
-pub mod vector;
-pub mod singly_linked_list;
-pub mod doubly_linked_list;
-pub mod stack;
-pub mod queue;
-pub mod bst;
-pub mod heap;
-pub mod hash_table;
-pub mod trie;
-pub mod dsu;
-pub mod avl_tree;
-pub mod graph;
+pub mod ds_01_vector;
+pub mod ds_02_singly_linked_list;
+pub mod ds_03_doubly_linked_list;
+pub mod ds_04_stack;
+pub mod ds_05_queue;
+pub mod ds_06_bst;
+pub mod ds_07_heap;
+pub mod ds_08_hash_table;
+pub mod ds_09_trie;
+pub mod ds_10_dsu;
+pub mod ds_11_avl_tree;
+pub mod ds_12_graph;
 
-pub use vector::MyVec;
-pub use singly_linked_list::SinglyLinkedList;
-pub use doubly_linked_list::DoublyLinkedList;
-pub use stack::Stack;
-pub use queue::Queue;
-pub use bst::BinarySearchTree;
-pub use heap::BinaryHeap;
-pub use hash_table::HashTable;
-pub use trie::Trie;
-pub use dsu::Dsu;
-pub use avl_tree::AvlTree;
-pub use graph::Graph;
+pub use ds_01_vector::MyVec;
+pub use ds_02_singly_linked_list::SinglyLinkedList;
+pub use ds_03_doubly_linked_list::DoublyLinkedList;
+pub use ds_04_stack::Stack;
+pub use ds_05_queue::Queue;
+pub use ds_06_bst::BinarySearchTree;
+pub use ds_07_heap::BinaryHeap;
+pub use ds_08_hash_table::HashTable;
+pub use ds_09_trie::Trie;
+pub use ds_10_dsu::Dsu;
+pub use ds_11_avl_tree::AvlTree;
+pub use ds_12_graph::Graph;
 
 #[cfg(test)]
 mod tests {
@@ -172,7 +172,6 @@ mod tests {
         }
         assert!(heap.is_empty());
 
-        // Test heapify from vector
         let heap2 = BinaryHeap::from(nums);
         assert_eq!(heap2.len(), 7);
         assert_eq!(heap2.peek(), Some(&30));
@@ -193,18 +192,15 @@ mod tests {
         assert!(map.contains_key("apple"));
         assert!(!map.contains_key("grape"));
 
-        // Update
         let old = map.insert("banana".to_string(), 200);
         assert_eq!(old, Some(20));
         assert_eq!(map.get("banana"), Some(&200));
 
-        // Mutable access
         if let Some(val) = map.get_mut("date") {
             *val += 5;
         }
         assert_eq!(map.get("date"), Some(&45));
 
-        // Remove
         assert_eq!(map.remove("cherry"), Some(30));
         assert!(!map.contains_key("cherry"));
         assert_eq!(map.len(), 3);
@@ -218,19 +214,17 @@ mod tests {
         assert!(trie.insert("banana"));
         assert!(trie.insert("band"));
         assert!(trie.insert("banner"));
-        assert!(!trie.insert("banana")); // duplicate
+        assert!(!trie.insert("banana"));
 
         assert_eq!(trie.len(), 3);
         assert!(trie.search("banana"));
         assert!(trie.search("band"));
         assert!(!trie.search("ban"));
 
-        // Prefix
         assert!(trie.starts_with("ban"));
         assert!(trie.starts_with("band"));
         assert!(!trie.starts_with("zoo"));
 
-        // Removal
         assert!(trie.remove("band"));
         assert!(!trie.search("band"));
         assert!(trie.search("banana"));
@@ -248,7 +242,6 @@ mod tests {
         assert!(!dsu.connected(0, 3));
         assert_eq!(dsu.set_count(), 4);
 
-        // Already connected
         assert!(!dsu.union(0, 2));
         assert_eq!(dsu.set_count(), 4);
 
@@ -256,7 +249,6 @@ mod tests {
         assert!(dsu.union(4, 5));
         assert_eq!(dsu.set_count(), 2);
 
-        // Merge components
         assert!(dsu.union(2, 4));
         assert_eq!(dsu.set_count(), 1);
         assert!(dsu.connected(0, 5));
@@ -271,9 +263,9 @@ mod tests {
         for v in vals {
             assert!(avl.insert(v));
         }
-        assert!(!avl.insert(20)); // duplicate
+        assert!(!avl.insert(20));
         assert_eq!(avl.len(), 7);
-        assert!(avl.height() <= 4); // strictly logarithmic balance!
+        assert!(avl.height() <= 4);
 
         assert!(avl.contains(&25));
         assert!(avl.contains(&10));
@@ -282,7 +274,6 @@ mod tests {
         let inorder = avl.inorder();
         assert_eq!(inorder, vec![5, 10, 20, 25, 30, 40, 50]);
 
-        // Remove node with rotation rebalance
         assert!(avl.remove(&30));
         assert!(!avl.contains(&30));
         assert_eq!(avl.len(), 6);
@@ -291,7 +282,7 @@ mod tests {
 
     #[test]
     fn test_graph() {
-        let mut g = Graph::new(5, false); // undirected
+        let mut g = Graph::new(5, false);
         assert_eq!(g.vertex_count(), 5);
         assert!(!g.is_directed());
 

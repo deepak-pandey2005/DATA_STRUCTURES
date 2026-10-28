@@ -29,7 +29,7 @@ Memory:  | 10  | 20  | 30  | 40  | 50  |  -  |  -  |  -  |
          | <------- size = 5 --------> | <--- unused ---> |
          | <---------------- capacity = 8 --------------> |
 ```
-- **Documentation:** [`docs/dynamic_array.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/dynamic_array.md)
+- **Documentation:** [`docs/01_dynamic_array.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/01_dynamic_array.md)
 - **Key Highlight:** $O(1)$ amortized append, contiguous cache locality.
 
 ---
@@ -47,7 +47,7 @@ Discrete heap nodes chained through a single forward `next` pointer.
                                                  │
                                               [ Tail ]
 ```
-- **Documentation:** [`docs/singly_linked_list.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/singly_linked_list.md)
+- **Documentation:** [`docs/02_singly_linked_list.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/02_singly_linked_list.md)
 - **Key Highlight:** $O(1)$ prepend/append, non-contiguous allocations, iterative leak-free teardown.
 
 ---
@@ -62,7 +62,7 @@ Bidirectional pointer links allowing $O(1)$ node removal from both ends and bidi
 NULL ◄─┼ prev │ val:1 │ next ┼─────►│ prev │ val:2 │ next ┼─────►│ prev │ val:3 │ next ┼─► NULL
        └──────┴───────┴──────┘◄─────┴──────┴───────┴──────┘◄─────┴──────┴───────┴──────┘
 ```
-- **Documentation:** [`docs/doubly_linked_list.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/doubly_linked_list.md)
+- **Documentation:** [`docs/03_doubly_linked_list.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/03_doubly_linked_list.md)
 - **Key Highlight:** $O(1)$ push/pop at head and tail; cycle-safe Rust ownership via `Option<Box<Node>>`.
 
 ---
@@ -76,7 +76,7 @@ Last-In, First-Out sequence backed by a dynamic array.
   Pop  ◄─── | [ 10 ] |
             +--------+
 ```
-- **Documentation:** [`docs/stack.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/stack.md)
+- **Documentation:** [`docs/04_stack.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/04_stack.md)
 - **Key Highlight:** $O(1)$ push, pop, and top inspection.
 
 ---
@@ -94,7 +94,7 @@ First-In, First-Out circular buffer eliminating $O(n)$ shifts on dequeue.
         │                                       │
      Wrap-around ─── Enqueue ──► [Tail: 0]
 ```
-- **Documentation:** [`docs/queue.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/queue.md)
+- **Documentation:** [`docs/05_queue.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/05_queue.md)
 - **Key Highlight:** $O(1)$ enqueue and dequeue; modulo-based pointer wrapping.
 
 ---
@@ -108,7 +108,7 @@ Ordered tree satisfying the invariant: $\text{left} < \text{node} < \text{right}
            /     \    /     \
         [ 20 ] [ 40 ][ 60 ] [ 80 ]
 ```
-- **Documentation:** [`docs/binary_search_tree.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/binary_search_tree.md)
+- **Documentation:** [`docs/06_binary_search_tree.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/06_binary_search_tree.md)
 - **Key Highlight:** 3-case deletion (leaf, 1 child, 2 children via in-order successor); sorted in-order traversal.
 
 ---
@@ -123,7 +123,7 @@ Tree View:                    Array Mapping:
      /     \     /             Left(i)   = 2i + 1
   [3] 10 [4] 15 [5] 8          Right(i)  = 2i + 2
 ```
-- **Documentation:** [`docs/heap.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/heap.md)
+- **Documentation:** [`docs/07_heap.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/07_heap.md)
 - **Key Highlight:** $O(1)$ peek, $O(\log n)$ push/pop with sift-up/sift-down, $O(n)$ bottom-up heapify.
 
 ---
@@ -139,7 +139,7 @@ Associative key-value map with 64-bit FNV-1a hashing and linked collision chains
    [ 2 ] ──► NULL
    [ 3 ] ──► [ "cherry": 90 ] ──► NULL
 ```
-- **Documentation:** [`docs/hash_table.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/hash_table.md)
+- **Documentation:** [`docs/08_hash_table.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/08_hash_table.md)
 - **Key Highlight:** Amortized $O(1)$ lookup/insert; automated rehashing when load factor $\alpha \ge 0.75$.
 
 ---
@@ -157,7 +157,7 @@ Associative key-value map with 64-bit FNV-1a hashing and linked collision chains
    (is_end)   \
    -> "bat"   'd' (is_end: true) -> "band"
 ```
-- **Documentation:** [`docs/trie.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/trie.md)
+- **Documentation:** [`docs/09_trie.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/09_trie.md)
 - **Key Highlight:** $O(L)$ word lookup and prefix matching independent of total dictionary size $n$.
 
 ---
@@ -174,7 +174,7 @@ Path Compression (Find):              Union by Rank (Merge):
        |
        3
 ```
-- **Documentation:** [`docs/dsu.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/dsu.md)
+- **Documentation:** [`docs/10_dsu.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/10_dsu.md)
 - **Key Highlight:** Near $O(1)$ operations ($\alpha(n) \le 4$ Inverse Ackermann); cycle detection in graphs.
 
 ---
@@ -191,7 +191,7 @@ Guarantees $O(\log n)$ worst-case time by enforcing $\text{Balance Factor} \in \
          / \
         T0  T1
 ```
-- **Documentation:** [`docs/avl_tree.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/avl_tree.md)
+- **Documentation:** [`docs/11_avl_tree.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/11_avl_tree.md)
 - **Key Highlight:** Strict height tracking, 4 rotation rebalancing cases (LL, RR, LR, RL).
 
 ---
@@ -206,7 +206,7 @@ Graph Topology:                      Adjacency List:
       │    ╱     │                   3: [0] ──► [2]
      (3) ────── (2) ────── (4)       4: [2]
 ```
-- **Documentation:** [`docs/graph.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/graph.md)
+- **Documentation:** [`docs/12_graph.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/12_graph.md)
 - **Key Highlight:** $O(V + E)$ space, Breadth-First Search (shortest unweighted paths), and Depth-First Search.
 
 ---
@@ -238,66 +238,66 @@ Each language implementation is neatly separated into dedicated subdirectories p
 DATA_STRUCTURES/
 ├── Makefile                          # Unified root test runner across C, C++, and Rust
 ├── README.md                         # Visual architectural overview and documentation
-├── docs/                             # Conceptual architecture and mathematical analysis
-│   ├── dynamic_array.md
-│   ├── singly_linked_list.md
-│   ├── doubly_linked_list.md
-│   ├── stack.md
-│   ├── queue.md
-│   ├── binary_search_tree.md
-│   ├── heap.md
-│   ├── hash_table.md
-│   ├── trie.md
-│   ├── dsu.md
-│   ├── avl_tree.md
-│   └── graph.md
-├── c/                                # C11 implementations (isolated per data structure)
+├── docs/                             # Numbered conceptual architecture and complexity analysis
+│   ├── 01_dynamic_array.md
+│   ├── 02_singly_linked_list.md
+│   ├── 03_doubly_linked_list.md
+│   ├── 04_stack.md
+│   ├── 05_queue.md
+│   ├── 06_binary_search_tree.md
+│   ├── 07_heap.md
+│   ├── 08_hash_table.md
+│   ├── 09_trie.md
+│   ├── 10_dsu.md
+│   ├── 11_avl_tree.md
+│   └── 12_graph.md
+├── c/                                # C11 implementations (numbered subdirectories)
 │   ├── Makefile
 │   ├── common/include/               # Shared status codes (common.h)
-│   ├── vector/                       # include/vector.h, src/vector.c
-│   ├── singly_linked_list/
-│   ├── doubly_linked_list/
-│   ├── stack/
-│   ├── queue/
-│   ├── bst/
-│   ├── heap/
-│   ├── hash_table/
-│   ├── trie/
-│   ├── dsu/
-│   ├── avl_tree/
-│   ├── graph/
+│   ├── 01_vector/                    # include/vector.h, src/vector.c
+│   ├── 02_singly_linked_list/
+│   ├── 03_doubly_linked_list/
+│   ├── 04_stack/
+│   ├── 05_queue/
+│   ├── 06_bst/
+│   ├── 07_heap/
+│   ├── 08_hash_table/
+│   ├── 09_trie/
+│   ├── 10_dsu/
+│   ├── 11_avl_tree/
+│   ├── 12_graph/
 │   └── tests/test_runner.c           # Comprehensive C test suite
-├── cpp/                              # Modern C++20 templated implementations
+├── cpp/                              # Modern C++20 templated implementations (numbered subdirectories)
 │   ├── Makefile
-│   ├── vector/                       # include/Vector.hpp, src/Vector.cpp
-│   ├── singly_linked_list/
-│   ├── doubly_linked_list/
-│   ├── stack/
-│   ├── queue/
-│   ├── bst/
-│   ├── heap/
-│   ├── hash_table/
-│   ├── trie/
-│   ├── dsu/
-│   ├── avl_tree/
-│   ├── graph/
+│   ├── 01_vector/                    # include/Vector.hpp, src/Vector.cpp
+│   ├── 02_singly_linked_list/
+│   ├── 03_doubly_linked_list/
+│   ├── 04_stack/
+│   ├── 05_queue/
+│   ├── 06_bst/
+│   ├── 07_heap/
+│   ├── 08_hash_table/
+│   ├── 09_trie/
+│   ├── 10_dsu/
+│   ├── 11_avl_tree/
+│   ├── 12_graph/
 │   └── tests/test_main.cpp           # Modern C++ test suite
-└── rust/                             # Safe Rust modular crate
+└── rust/                             # Safe Rust modular crate (numbered module subdirectories)
     ├── Cargo.toml
     └── src/
         ├── lib.rs                    # Root crate exports & unit tests
-        ├── vector/mod.rs
-        ├── singly_linked_list/mod.rs
-        ├── doubly_linked_list/mod.rs
-        ├── stack/mod.rs
-        ├── queue/mod.rs
-        ├── bst/mod.rs
-        ├── heap/mod.rs
-        ├── hash_table/mod.rs
-        ├── trie/mod.rs
-        ├── dsu/mod.rs
-        ├── avl_tree/mod.rs
-        └── graph/mod.rs
+        ├── ds_01_vector/mod.rs
+        ├── ds_02_singly_linked_list/mod.rs
+        ├── ds_03_doubly_linked_list/mod.rs
+        ├── ds_04_stack/mod.rs
+        ├── ds_05_queue/mod.rs
+        ├── ds_06_bst/mod.rs
+        ├── ds_07_heap/mod.rs
+        ├── ds_08_hash_table/mod.rs
+        ├── ds_09_trie/mod.rs
+        ├── ds_10_dsu/mod.rs
+        ├── ds_11_avl_tree/mod.rs
+        └── ds_12_graph/mod.rs
 ```
 
 ---

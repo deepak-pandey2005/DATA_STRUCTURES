@@ -1,4 +1,4 @@
-use crate::vector::MyVec;
+use crate::ds_01_vector::MyVec;
 
 pub struct Stack<T> {
     data: MyVec<T>,

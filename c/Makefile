@@ -1,32 +1,32 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -pedantic -std=c11 \
          -Icommon/include \
-         -Ivector/include \
-         -Isingly_linked_list/include \
-         -Idoubly_linked_list/include \
-         -Istack/include \
-         -Iqueue/include \
-         -Ibst/include \
-         -Iheap/include \
-         -Ihash_table/include \
-         -Itrie/include \
-         -Idsu/include \
-         -Iavl_tree/include \
-         -Igraph/include \
+         -I01_vector/include \
+         -I02_singly_linked_list/include \
+         -I03_doubly_linked_list/include \
+         -I04_stack/include \
+         -I05_queue/include \
+         -I06_bst/include \
+         -I07_heap/include \
+         -I08_hash_table/include \
+         -I09_trie/include \
+         -I10_dsu/include \
+         -I11_avl_tree/include \
+         -I12_graph/include \
          -g
 
-SRCS = vector/src/vector.c \
-       singly_linked_list/src/singly_linked_list.c \
-       doubly_linked_list/src/doubly_linked_list.c \
-       stack/src/stack.c \
-       queue/src/queue.c \
-       bst/src/bst.c \
-       heap/src/heap.c \
-       hash_table/src/hash_table.c \
-       trie/src/trie.c \
-       dsu/src/dsu.c \
-       avl_tree/src/avl_tree.c \
-       graph/src/graph.c
+SRCS = 01_vector/src/vector.c \
+       02_singly_linked_list/src/singly_linked_list.c \
+       03_doubly_linked_list/src/doubly_linked_list.c \
+       04_stack/src/stack.c \
+       05_queue/src/queue.c \
+       06_bst/src/bst.c \
+       07_heap/src/heap.c \
+       08_hash_table/src/hash_table.c \
+       09_trie/src/trie.c \
+       10_dsu/src/dsu.c \
+       11_avl_tree/src/avl_tree.c \
+       12_graph/src/graph.c
 
 TEST_SRCS = tests/test_runner.c $(SRCS)
 TEST_BIN = bin/test_runner
