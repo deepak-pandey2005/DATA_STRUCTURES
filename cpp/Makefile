@@ -11,6 +11,7 @@ CXXFLAGS = -Wall -Wextra -Wpedantic -std=c++20 \
            -Itrie/include \
            -Idsu/include \
            -Iavl_tree/include \
+           -Igraph/include \
            -g
 
 SRCS = vector/src/Vector.cpp \
@@ -23,7 +24,8 @@ SRCS = vector/src/Vector.cpp \
        hash_table/src/HashTable.cpp \
        trie/src/Trie.cpp \
        dsu/src/DSU.cpp \
-       avl_tree/src/AVLTree.cpp
+       avl_tree/src/AVLTree.cpp \
+       graph/src/Graph.cpp
 
 TEST_SRCS = tests/test_main.cpp $(SRCS)
 BIN = bin/test_runner

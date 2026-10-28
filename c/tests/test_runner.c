@@ -12,6 +12,7 @@
 #include "trie.h"
 #include "dsu.h"
 #include "avl_tree.h"
+#include "graph.h"
 
 static int g_tests_passed = 0;
 
@@ -427,6 +428,51 @@ void test_avl() {
     TEST_ASSERT(avl_is_empty(&tree));
 }
 
+/* --- Graph Tests --- */
+static size_t g_visited_nodes[16];
+static size_t g_visited_count = 0;
+
+static void graph_collect_visit(size_t v) {
+    if (g_visited_count < 16) {
+        g_visited_nodes[g_visited_count++] = v;
+    }
+}
+
+void test_graph() {
+    Graph g;
+    TEST_ASSERT(graph_init(&g, 5, false) == DS_SUCCESS); // 5 vertices undirected
+    TEST_ASSERT(graph_vertex_count(&g) == 5);
+
+    // Build cycle with cross edge:
+    // 0 - 1
+    // |   |
+    // 3 - 2 - 4
+    TEST_ASSERT(graph_add_edge(&g, 0, 1, 1) == DS_SUCCESS);
+    TEST_ASSERT(graph_add_edge(&g, 1, 2, 1) == DS_SUCCESS);
+    TEST_ASSERT(graph_add_edge(&g, 2, 3, 1) == DS_SUCCESS);
+    TEST_ASSERT(graph_add_edge(&g, 3, 0, 1) == DS_SUCCESS);
+    TEST_ASSERT(graph_add_edge(&g, 2, 4, 1) == DS_SUCCESS);
+
+    TEST_ASSERT(graph_has_edge(&g, 0, 1));
+    TEST_ASSERT(graph_has_edge(&g, 1, 0)); // undirected check
+    TEST_ASSERT(graph_has_edge(&g, 2, 4));
+    TEST_ASSERT(!graph_has_edge(&g, 0, 4));
+
+    // Test BFS from 0
+    g_visited_count = 0;
+    TEST_ASSERT(graph_bfs(&g, 0, graph_collect_visit) == DS_SUCCESS);
+    TEST_ASSERT(g_visited_count == 5);
+    TEST_ASSERT(g_visited_nodes[0] == 0); // start vertex visited first
+
+    // Test DFS from 0
+    g_visited_count = 0;
+    TEST_ASSERT(graph_dfs(&g, 0, graph_collect_visit) == DS_SUCCESS);
+    TEST_ASSERT(g_visited_count == 5);
+    TEST_ASSERT(g_visited_nodes[0] == 0);
+
+    graph_destroy(&g);
+}
+
 int main(void) {
     printf("========================================\n");
     printf("   Running C Data Structures Test Suite \n");
@@ -443,6 +489,7 @@ int main(void) {
     RUN_TEST(test_trie);
     RUN_TEST(test_dsu);
     RUN_TEST(test_avl);
+    RUN_TEST(test_graph);
 
     printf("\nAll %d C tests passed successfully!\n", g_tests_passed);
     return 0;

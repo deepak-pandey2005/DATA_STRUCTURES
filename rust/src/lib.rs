@@ -9,6 +9,7 @@ pub mod hash_table;
 pub mod trie;
 pub mod dsu;
 pub mod avl_tree;
+pub mod graph;
 
 pub use vector::MyVec;
 pub use singly_linked_list::SinglyLinkedList;
@@ -21,6 +22,7 @@ pub use hash_table::HashTable;
 pub use trie::Trie;
 pub use dsu::Dsu;
 pub use avl_tree::AvlTree;
+pub use graph::Graph;
 
 #[cfg(test)]
 mod tests {
@@ -285,5 +287,31 @@ mod tests {
         assert!(!avl.contains(&30));
         assert_eq!(avl.len(), 6);
         assert!(avl.height() <= 4);
+    }
+
+    #[test]
+    fn test_graph() {
+        let mut g = Graph::new(5, false); // undirected
+        assert_eq!(g.vertex_count(), 5);
+        assert!(!g.is_directed());
+
+        g.add_edge(0, 1, 1);
+        g.add_edge(1, 2, 1);
+        g.add_edge(2, 3, 1);
+        g.add_edge(3, 0, 1);
+        g.add_edge(2, 4, 1);
+
+        assert!(g.has_edge(0, 1));
+        assert!(g.has_edge(1, 0));
+        assert!(g.has_edge(2, 4));
+        assert!(!g.has_edge(0, 4));
+
+        let bfs_res = g.bfs(0);
+        assert_eq!(bfs_res.len(), 5);
+        assert_eq!(bfs_res[0], 0);
+
+        let dfs_res = g.dfs(0);
+        assert_eq!(dfs_res.len(), 5);
+        assert_eq!(dfs_res[0], 0);
     }
 }

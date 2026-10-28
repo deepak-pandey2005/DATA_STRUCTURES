@@ -12,6 +12,7 @@ CFLAGS = -Wall -Wextra -pedantic -std=c11 \
          -Itrie/include \
          -Idsu/include \
          -Iavl_tree/include \
+         -Igraph/include \
          -g
 
 SRCS = vector/src/vector.c \
@@ -24,7 +25,8 @@ SRCS = vector/src/vector.c \
        hash_table/src/hash_table.c \
        trie/src/trie.c \
        dsu/src/dsu.c \
-       avl_tree/src/avl_tree.c
+       avl_tree/src/avl_tree.c \
+       graph/src/graph.c
 
 TEST_SRCS = tests/test_runner.c $(SRCS)
 TEST_BIN = bin/test_runner

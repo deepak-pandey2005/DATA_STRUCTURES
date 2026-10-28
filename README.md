@@ -19,6 +19,7 @@ In-depth conceptual guides with memory layouts, time/space complexity, diagrams,
 - [Trie (Prefix Tree)](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/trie.md) - Re**trie**val tree, direct alphabet branching ($O(L)$), prefix search, and recursive pruning.
 - [Disjoint Set Union (Union-Find / DSU)](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/dsu.md) - Near $O(1)$ ($\alpha(n)$) disjoint set tracking via path compression and union by rank.
 - [AVL Tree (Self-Balancing BST)](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/avl_tree.md) - Guaranteed $O(\log n)$ worst-case operations via balance factor caching and LL/RR/LR/RL tree rotations.
+- [Graph (Adjacency List)](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/graph.md) - Space-efficient $O(V + E)$ graph representation supporting BFS (shortest unweighted paths) and DFS (backtracking).
 
 ---
 

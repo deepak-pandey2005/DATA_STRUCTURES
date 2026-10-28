@@ -13,6 +13,7 @@
 #include "Trie.hpp"
 #include "DSU.hpp"
 #include "AVLTree.hpp"
+#include "Graph.hpp"
 
 static int g_cpp_tests_passed = 0;
 
@@ -404,6 +405,35 @@ void test_avl_tree_cpp() {
     CPP_TEST_ASSERT(copy.contains(25));
 }
 
+void test_graph_cpp() {
+    ds::Graph<int> g(5, false); // 5 vertices undirected
+    CPP_TEST_ASSERT(g.vertex_count() == 5);
+    CPP_TEST_ASSERT(!g.is_directed());
+
+    g.add_edge(0, 1);
+    g.add_edge(1, 2);
+    g.add_edge(2, 3);
+    g.add_edge(3, 0);
+    g.add_edge(2, 4);
+
+    CPP_TEST_ASSERT(g.has_edge(0, 1));
+    CPP_TEST_ASSERT(g.has_edge(1, 0));
+    CPP_TEST_ASSERT(g.has_edge(2, 4));
+    CPP_TEST_ASSERT(!g.has_edge(0, 4));
+
+    // BFS
+    std::vector<std::size_t> bfs_order;
+    g.bfs(0, [&](std::size_t v) { bfs_order.push_back(v); });
+    CPP_TEST_ASSERT(bfs_order.size() == 5);
+    CPP_TEST_ASSERT(bfs_order[0] == 0);
+
+    // DFS
+    std::vector<std::size_t> dfs_order;
+    g.dfs(0, [&](std::size_t v) { dfs_order.push_back(v); });
+    CPP_TEST_ASSERT(dfs_order.size() == 5);
+    CPP_TEST_ASSERT(dfs_order[0] == 0);
+}
+
 int main() {
     std::cout << "==========================================\n";
     std::cout << "   Running C++ Data Structures Test Suite \n";
@@ -420,6 +450,7 @@ int main() {
     RUN_CPP_TEST(test_trie_cpp);
     RUN_CPP_TEST(test_dsu_cpp);
     RUN_CPP_TEST(test_avl_tree_cpp);
+    RUN_CPP_TEST(test_graph_cpp);
 
     std::cout << "\nAll " << g_cpp_tests_passed << " C++ tests passed successfully!\n";
     return 0;
