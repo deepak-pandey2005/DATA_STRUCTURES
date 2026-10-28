@@ -89,3 +89,4 @@ impl<W: Clone> Graph<W> {
         self.directed
     }
 }
+

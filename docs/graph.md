@@ -53,3 +53,4 @@ Adjacency List:
 | **Add Edge** | $O(1)$ | $O(1)$ | Append destination to source neighbor list. |
 | **BFS Traversal** | $O(V + E)$ | $O(V)$ | Level-order queue search. |
 | **DFS Traversal** | $O(V + E)$ | $O(V)$ | Backtracking depth search. |
+

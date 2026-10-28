@@ -68,3 +68,4 @@ size_t graph_vertex_count(const Graph *g);
 #endif
 
 #endif // DS_GRAPH_H
+

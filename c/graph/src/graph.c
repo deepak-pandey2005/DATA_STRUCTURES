@@ -144,3 +144,4 @@ ds_status_t graph_dfs(const Graph *g, size_t start_vertex, void (*visit_cb)(size
 size_t graph_vertex_count(const Graph *g) {
     return g ? g->num_vertices : 0;
 }
+
