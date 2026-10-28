@@ -29,14 +29,30 @@ SRCS = 01_vector/src/Vector.cpp \
 
 TEST_SRCS = tests/test_main.cpp $(SRCS)
 BIN = bin/test_runner
+PLAYGROUND_BIN = bin/playground
+BST_DEMO_BIN = bin/bst_demo
 
-.PHONY: all test clean
+.PHONY: all test clean playground run-bst
 
-all: $(BIN)
+all: $(BIN) $(PLAYGROUND_BIN) $(BST_DEMO_BIN)
 
 $(BIN): $(TEST_SRCS)
 	@mkdir -p bin
 	$(CXX) $(CXXFLAGS) $^ -o $@
+
+$(PLAYGROUND_BIN): playground.cpp $(SRCS)
+	@mkdir -p bin
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
+$(BST_DEMO_BIN): 06_bst/main.cpp 06_bst/src/BinarySearchTree.cpp
+	@mkdir -p bin
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
+playground: $(PLAYGROUND_BIN)
+	@./$(PLAYGROUND_BIN)
+
+run-bst: $(BST_DEMO_BIN)
+	@./$(BST_DEMO_BIN)
 
 test: $(BIN)
 	@./$(BIN)

@@ -315,6 +315,21 @@ DATA_STRUCTURES/
 make test
 ```
 
+### Run the Interactive CLI Playground:
+Launch an interactive terminal CLI to experiment with any data structure dynamically:
+```bash
+cd cpp && make playground
+```
+
+### Run Standalone Data Structure Drivers:
+```bash
+# Run standalone Binary Search Tree demo in C:
+cd c && make run-bst
+
+# Run standalone Binary Search Tree demo in C++:
+cd cpp && make run-bst
+```
+
 ### Run Tests for Individual Languages:
 ```bash
 # Run C test suite (12 tests)

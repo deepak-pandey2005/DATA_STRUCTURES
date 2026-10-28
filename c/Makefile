@@ -30,14 +30,22 @@ SRCS = 01_vector/src/vector.c \
 
 TEST_SRCS = tests/test_runner.c $(SRCS)
 TEST_BIN = bin/test_runner
+BST_DEMO_BIN = bin/bst_demo
 
-.PHONY: all test clean
+.PHONY: all test clean run-bst
 
-all: $(TEST_BIN)
+all: $(TEST_BIN) $(BST_DEMO_BIN)
 
 $(TEST_BIN): $(TEST_SRCS)
 	@mkdir -p bin
 	$(CC) $(CFLAGS) $^ -o $@
+
+$(BST_DEMO_BIN): 06_bst/main.c 06_bst/src/bst.c
+	@mkdir -p bin
+	$(CC) $(CFLAGS) $^ -o $@
+
+run-bst: $(BST_DEMO_BIN)
+	@./$(BST_DEMO_BIN)
 
 test: $(TEST_BIN)
 	@./$(TEST_BIN)
