@@ -258,6 +258,24 @@ Constant time $O(1)$ key-value cache combining a hash map with a doubly linked l
 
 ---
 
+### 16. Bloom Filter
+Space-efficient probabilistic data structure for set membership testing with zero false negatives.
+```
+Input: "apple"
+  Hash 1("apple") % 16 = 3  ────────┐
+  Hash 2("apple") % 16 = 7  ────────┼─► Set bits at indices [3, 7, 12] to 1
+  Hash 3("apple") % 16 = 12 ────────┘
+
+Bit Array (m = 16):
+Index:  0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
+Bits:  [0] [0] [0] [1] [0] [0] [0] [1] [0] [0] [0] [0] [1] [0] [0] [0]
+                    ▲               ▲                   ▲
+```
+- **Documentation:** [`docs/16_bloom_filter.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/16_bloom_filter.md)
+- **Key Highlight:** $O(k)$ membership query and insertion using 64-bit dual-hash simulation (Kirsch-Mitzenmacher optimization).
+
+---
+
 ## 📊 Complexity & Comparison Matrix
 
 | Data Structure | Access | Search | Insert | Delete | Space Complexity |
@@ -277,6 +295,7 @@ Constant time $O(1)$ key-value cache combining a hash map with a doubly linked l
 | **Segment Tree** | $O(\log n)$ | $O(\log n)$ | $O(\log n)$ | N/A | $O(n)$ |
 | **Fenwick Tree (BIT)** | $O(\log n)$ | $O(\log n)$ | $O(\log n)$ | N/A | $O(n)$ |
 | **LRU Cache** | N/A | $O(1)$ | $O(1)$ | $O(1)$ | $O(\text{capacity})$ |
+| **Bloom Filter** | N/A | $O(k)$ (probabilistic) | $O(k)$ | N/A | $O(m)$ bits |
 
 ---
 
@@ -303,7 +322,8 @@ DATA_STRUCTURES/
 │   ├── 12_graph.md
 │   ├── 13_segment_tree.md
 │   ├── 14_fenwick_tree.md
-│   └── 15_lru_cache.md
+│   ├── 15_lru_cache.md
+│   └── 16_bloom_filter.md
 ├── c/                                # C11 implementations (numbered subdirectories)
 │   ├── Makefile
 │   ├── common/include/               # Shared status codes (common.h)
@@ -322,6 +342,7 @@ DATA_STRUCTURES/
 │   ├── 13_segment_tree/
 │   ├── 14_fenwick_tree/
 │   ├── 15_lru_cache/
+│   ├── 16_bloom_filter/
 │   └── tests/test_runner.c           # Comprehensive C test suite
 ├── cpp/                              # Modern C++20 templated implementations (numbered subdirectories)
 │   ├── Makefile
@@ -340,6 +361,7 @@ DATA_STRUCTURES/
 │   ├── 13_segment_tree/
 │   ├── 14_fenwick_tree/
 │   ├── 15_lru_cache/
+│   ├── 16_bloom_filter/
 │   └── tests/test_main.cpp           # Modern C++ test suite
 └── rust/                             # Safe Rust modular crate (numbered module subdirectories)
     ├── Cargo.toml
@@ -359,7 +381,8 @@ DATA_STRUCTURES/
         ├── ds_12_graph/mod.rs
         ├── ds_13_segment_tree/mod.rs
         ├── ds_14_fenwick_tree/mod.rs
-        └── ds_15_lru_cache/mod.rs
+        ├── ds_15_lru_cache/mod.rs
+        └── ds_16_bloom_filter/mod.rs
 ```
 
 ---
@@ -394,12 +417,12 @@ cd cpp && make run-bst
 
 ### Run Tests for Individual Languages:
 ```bash
-# Run C test suite (15 tests)
+# Run C test suite (16 tests)
 cd c && make test
 
-# Run C++ test suite (15 tests)
+# Run C++ test suite (16 tests)
 cd cpp && make test
 
-# Run Rust unit test suite (15 tests)
+# Run Rust unit test suite (16 tests)
 cargo test --manifest-path rust/Cargo.toml
 ```

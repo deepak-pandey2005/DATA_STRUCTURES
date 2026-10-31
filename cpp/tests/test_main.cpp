@@ -17,6 +17,7 @@
 #include "SegmentTree.hpp"
 #include "FenwickTree.hpp"
 #include "LRUCache.hpp"
+#include "BloomFilter.hpp"
 
 static int g_cpp_tests_passed = 0;
 
@@ -488,6 +489,28 @@ void test_lru_cache_cpp() {
     CPP_TEST_ASSERT(cache.size() == 2);
 }
 
+void test_bloom_filter_cpp() {
+    ds::BloomFilter<std::string> bf(1000, 4);
+    CPP_TEST_ASSERT(bf.num_bits() == 1000);
+    CPP_TEST_ASSERT(bf.num_hashes() == 4);
+
+    std::vector<std::string> words = {"alpha", "beta", "gamma", "delta"};
+    for (const auto& w : words) {
+        bf.add(w);
+    }
+
+    // No false negatives
+    for (const auto& w : words) {
+        CPP_TEST_ASSERT(bf.contains(w));
+    }
+
+    CPP_TEST_ASSERT(!bf.contains("omega"));
+    CPP_TEST_ASSERT(!bf.contains("epsilon"));
+
+    bf.clear();
+    CPP_TEST_ASSERT(!bf.contains("alpha"));
+}
+
 int main() {
     std::cout << "==========================================\n";
     std::cout << "   Running C++ Data Structures Test Suite \n";
@@ -508,6 +531,7 @@ int main() {
     RUN_CPP_TEST(test_segment_tree_cpp);
     RUN_CPP_TEST(test_fenwick_tree_cpp);
     RUN_CPP_TEST(test_lru_cache_cpp);
+    RUN_CPP_TEST(test_bloom_filter_cpp);
 
     std::cout << "\nAll " << g_cpp_tests_passed << " C++ tests passed successfully!\n";
     return 0;

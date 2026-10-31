@@ -13,6 +13,7 @@ pub mod ds_12_graph;
 pub mod ds_13_segment_tree;
 pub mod ds_14_fenwick_tree;
 pub mod ds_15_lru_cache;
+pub mod ds_16_bloom_filter;
 
 pub use ds_01_vector::MyVec;
 pub use ds_02_singly_linked_list::SinglyLinkedList;
@@ -29,6 +30,7 @@ pub use ds_12_graph::Graph;
 pub use ds_13_segment_tree::SegmentTree;
 pub use ds_14_fenwick_tree::FenwickTree;
 pub use ds_15_lru_cache::LruCache;
+pub use ds_16_bloom_filter::BloomFilter;
 
 #[cfg(test)]
 mod tests {
@@ -363,5 +365,27 @@ mod tests {
         // Update key 1
         assert_eq!(cache.put(1, "one-updated"), Some("one"));
         assert_eq!(cache.get(&1), Some(&"one-updated"));
+    }
+
+    #[test]
+    fn test_bloom_filter() {
+        let mut bf = BloomFilter::new(1000, 4);
+        assert_eq!(bf.num_bits(), 1000);
+        assert_eq!(bf.num_hashes(), 4);
+
+        let words = vec!["alpha", "beta", "gamma", "delta"];
+        for w in &words {
+            bf.insert(w);
+        }
+
+        for w in &words {
+            assert!(bf.contains(w));
+        }
+
+        assert!(!bf.contains(&"omega"));
+        assert!(!bf.contains(&"epsilon"));
+
+        bf.clear();
+        assert!(!bf.contains(&"alpha"));
     }
 }

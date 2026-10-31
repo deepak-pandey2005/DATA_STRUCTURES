@@ -23,6 +23,7 @@
 #include "SegmentTree.hpp"
 #include "FenwickTree.hpp"
 #include "LRUCache.hpp"
+#include "BloomFilter.hpp"
 
 static void clear_input() {
     std::cin.clear();
@@ -399,6 +400,40 @@ static void run_lru_cache_demo() {
     }
 }
 
+static void run_bloom_filter_demo() {
+    std::cout << "\n--- [16] Bloom Filter Playground ---\n";
+    std::cout << "Creating Bloom Filter (1000 bits, 4 hash functions)...\n";
+    ds::BloomFilter<std::string> bf(1000, 4);
+
+    int choice = 0;
+    while (true) {
+        std::cout << "\nBloom Filter (" << bf.num_bits() << " bits, " << bf.num_hashes() << " hashes)\n";
+        std::cout << "1. Add string | 2. Query string | 3. Clear filter | 0. Back: ";
+        if (!(std::cin >> choice) || choice == 0) break;
+        if (choice == 1) {
+            std::string word;
+            std::cout << "Enter word to add: ";
+            if (std::cin >> word) {
+                bf.add(word);
+                std::cout << "Added '" << word << "' to Bloom Filter.\n";
+            } else clear_input();
+        } else if (choice == 2) {
+            std::string word;
+            std::cout << "Enter word to query: ";
+            if (std::cin >> word) {
+                if (bf.contains(word)) {
+                    std::cout << "Result: Word '" << word << "' is PROBABLY in the set!\n";
+                } else {
+                    std::cout << "Result: Word '" << word << "' is DEFINITELY NOT in the set!\n";
+                }
+            } else clear_input();
+        } else if (choice == 3) {
+            bf.clear();
+            std::cout << "Cleared Bloom Filter.\n";
+        }
+    }
+}
+
 int main() {
     std::cout << "========================================================\n";
     std::cout << "  Interactive Data Structures Playground (Modern C++20) \n";
@@ -418,6 +453,7 @@ int main() {
         std::cout << "  9. [13] Segment Tree\n";
         std::cout << " 10. [14] Fenwick Tree (Binary Indexed Tree)\n";
         std::cout << " 11. [15] LRU Cache (Least Recently Used)\n";
+        std::cout << " 12. [16] Bloom Filter (Probabilistic Set)\n";
         std::cout << "  0. Exit\n";
         std::cout << "Enter choice: ";
 
@@ -438,6 +474,7 @@ int main() {
             case 9: run_segment_tree_demo(); break;
             case 10: run_fenwick_tree_demo(); break;
             case 11: run_lru_cache_demo(); break;
+            case 12: run_bloom_filter_demo(); break;
             default:
                 std::cout << "Invalid choice!\n";
                 clear_input();

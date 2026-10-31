@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <assert.h>
 #include "vector.h"
 #include "singly_linked_list.h"
@@ -16,6 +17,7 @@
 #include "segment_tree.h"
 #include "fenwick_tree.h"
 #include "lru_cache.h"
+#include "bloom_filter.h"
 
 static int g_tests_passed = 0;
 
@@ -548,6 +550,32 @@ void test_lru_cache() {
     lru_destroy(cache);
 }
 
+/* --- Bloom Filter Tests --- */
+void test_bloom_filter() {
+    bloom_filter_t *bf = NULL;
+    // 1000 bits, 4 hash functions
+    TEST_ASSERT(bloom_create(1000, 4, &bf) == DS_SUCCESS);
+
+    const char *words[] = {"apple", "banana", "orange", "grape", "peach"};
+    for (size_t i = 0; i < 5; ++i) {
+        TEST_ASSERT(bloom_add(bf, words[i], strlen(words[i])) == DS_SUCCESS);
+    }
+
+    // All inserted words MUST be reported as contained (no false negatives)
+    for (size_t i = 0; i < 5; ++i) {
+        TEST_ASSERT(bloom_contains(bf, words[i], strlen(words[i])) == true);
+    }
+
+    // Words definitely not inserted
+    TEST_ASSERT(bloom_contains(bf, "watermelon", strlen("watermelon")) == false);
+    TEST_ASSERT(bloom_contains(bf, "pineapple", strlen("pineapple")) == false);
+
+    bloom_clear(bf);
+    TEST_ASSERT(bloom_contains(bf, "apple", strlen("apple")) == false);
+
+    bloom_destroy(bf);
+}
+
 int main(void) {
     printf("========================================\n");
     printf("   Running C Data Structures Test Suite \n");
@@ -568,6 +596,7 @@ int main(void) {
     RUN_TEST(test_segment_tree);
     RUN_TEST(test_fenwick_tree);
     RUN_TEST(test_lru_cache);
+    RUN_TEST(test_bloom_filter);
 
     printf("\nAll %d C tests passed successfully!\n", g_tests_passed);
     return 0;
