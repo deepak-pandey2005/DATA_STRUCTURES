@@ -22,6 +22,7 @@
 #include "Graph.hpp"
 #include "SegmentTree.hpp"
 #include "FenwickTree.hpp"
+#include "LRUCache.hpp"
 
 static void clear_input() {
     std::cin.clear();
@@ -349,6 +350,55 @@ static void run_fenwick_tree_demo() {
     }
 }
 
+static void run_lru_cache_demo() {
+    std::cout << "\n--- [15] LRU Cache Playground ---\n";
+    std::size_t cap = 3;
+    std::cout << "Creating LRU Cache with capacity 3...\n";
+    ds::LRUCache<int, std::string> cache(cap);
+
+    int choice = 0;
+    while (true) {
+        std::cout << "\nLRU Cache size: " << cache.size() << "/" << cache.capacity() << "\n";
+        std::cout << "1. Put (Key, Value) | 2. Get (Key) | 3. Contains (Key) | 0. Back: ";
+        if (!(std::cin >> choice) || choice == 0) break;
+        if (choice == 1) {
+            int key;
+            std::string val;
+            std::cout << "Enter integer key and string value: ";
+            if (std::cin >> key >> val) {
+                cache.put(key, val);
+                std::cout << "Inserted (" << key << " -> " << val << ")\n";
+            } else {
+                std::cout << "Invalid input!\n";
+                clear_input();
+            }
+        } else if (choice == 2) {
+            int key;
+            std::cout << "Enter key to get: ";
+            if (std::cin >> key) {
+                auto res = cache.get(key);
+                if (res) {
+                    std::cout << "Value: " << *res << " (promoted to MRU)\n";
+                } else {
+                    std::cout << "Key " << key << " not found!\n";
+                }
+            } else {
+                std::cout << "Invalid key!\n";
+                clear_input();
+            }
+        } else if (choice == 3) {
+            int key;
+            std::cout << "Enter key to check: ";
+            if (std::cin >> key) {
+                std::cout << "Key " << key << (cache.contains(key) ? " exists!" : " does not exist.") << "\n";
+            } else {
+                std::cout << "Invalid key!\n";
+                clear_input();
+            }
+        }
+    }
+}
+
 int main() {
     std::cout << "========================================================\n";
     std::cout << "  Interactive Data Structures Playground (Modern C++20) \n";
@@ -367,6 +417,7 @@ int main() {
         std::cout << "  8. [12] Graph (Adjacency List + BFS/DFS)\n";
         std::cout << "  9. [13] Segment Tree\n";
         std::cout << " 10. [14] Fenwick Tree (Binary Indexed Tree)\n";
+        std::cout << " 11. [15] LRU Cache (Least Recently Used)\n";
         std::cout << "  0. Exit\n";
         std::cout << "Enter choice: ";
 
@@ -386,6 +437,7 @@ int main() {
             case 8: run_graph_demo(); break;
             case 9: run_segment_tree_demo(); break;
             case 10: run_fenwick_tree_demo(); break;
+            case 11: run_lru_cache_demo(); break;
             default:
                 std::cout << "Invalid choice!\n";
                 clear_input();

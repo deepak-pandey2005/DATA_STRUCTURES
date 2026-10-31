@@ -15,6 +15,7 @@
 #include "graph.h"
 #include "segment_tree.h"
 #include "fenwick_tree.h"
+#include "lru_cache.h"
 
 static int g_tests_passed = 0;
 
@@ -518,6 +519,35 @@ void test_fenwick_tree() {
     fenwick_destroy(&ft);
 }
 
+/* --- LRU Cache Tests --- */
+void test_lru_cache() {
+    lru_cache_t *cache = NULL;
+    TEST_ASSERT(lru_create(2, &cache) == DS_SUCCESS);
+    TEST_ASSERT(lru_capacity(cache) == 2);
+    TEST_ASSERT(lru_size(cache) == 0);
+
+    TEST_ASSERT(lru_put(cache, 1, 100) == DS_SUCCESS);
+    TEST_ASSERT(lru_put(cache, 2, 200) == DS_SUCCESS);
+    TEST_ASSERT(lru_size(cache) == 2);
+
+    int val = 0;
+    TEST_ASSERT(lru_get(cache, 1, &val) == DS_SUCCESS && val == 100);
+
+    // Adding key 3 will evict key 2 (since key 1 was accessed via get)
+    TEST_ASSERT(lru_put(cache, 3, 300) == DS_SUCCESS);
+    TEST_ASSERT(lru_size(cache) == 2);
+
+    TEST_ASSERT(lru_get(cache, 2, &val) == DS_ERR_NOT_FOUND);
+    TEST_ASSERT(lru_get(cache, 1, &val) == DS_SUCCESS && val == 100);
+    TEST_ASSERT(lru_get(cache, 3, &val) == DS_SUCCESS && val == 300);
+
+    // Update existing key
+    TEST_ASSERT(lru_put(cache, 1, 150) == DS_SUCCESS);
+    TEST_ASSERT(lru_get(cache, 1, &val) == DS_SUCCESS && val == 150);
+
+    lru_destroy(cache);
+}
+
 int main(void) {
     printf("========================================\n");
     printf("   Running C Data Structures Test Suite \n");
@@ -537,6 +567,7 @@ int main(void) {
     RUN_TEST(test_graph);
     RUN_TEST(test_segment_tree);
     RUN_TEST(test_fenwick_tree);
+    RUN_TEST(test_lru_cache);
 
     printf("\nAll %d C tests passed successfully!\n", g_tests_passed);
     return 0;

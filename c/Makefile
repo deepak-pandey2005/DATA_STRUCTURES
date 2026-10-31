@@ -15,6 +15,7 @@ CFLAGS = -Wall -Wextra -pedantic -std=c11 \
          -I12_graph/include \
          -I13_segment_tree/include \
          -I14_fenwick_tree/include \
+         -I15_lru_cache/include \
          -g
 
 SRCS = 01_vector/src/vector.c \
@@ -30,7 +31,8 @@ SRCS = 01_vector/src/vector.c \
        11_avl_tree/src/avl_tree.c \
        12_graph/src/graph.c \
        13_segment_tree/src/segment_tree.c \
-       14_fenwick_tree/src/fenwick_tree.c
+       14_fenwick_tree/src/fenwick_tree.c \
+       15_lru_cache/src/lru_cache.c
 
 TEST_SRCS = tests/test_runner.c $(SRCS)
 TEST_BIN = bin/test_runner

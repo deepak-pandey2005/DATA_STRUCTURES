@@ -14,6 +14,7 @@ CXXFLAGS = -Wall -Wextra -Wpedantic -std=c++20 \
            -I12_graph/include \
            -I13_segment_tree/include \
            -I14_fenwick_tree/include \
+           -I15_lru_cache/include \
            -g
 
 SRCS = 01_vector/src/Vector.cpp \
@@ -29,7 +30,8 @@ SRCS = 01_vector/src/Vector.cpp \
        11_avl_tree/src/AVLTree.cpp \
        12_graph/src/Graph.cpp \
        13_segment_tree/src/SegmentTree.cpp \
-       14_fenwick_tree/src/FenwickTree.cpp
+       14_fenwick_tree/src/FenwickTree.cpp \
+       15_lru_cache/src/LRUCache.cpp
 
 TEST_SRCS = tests/test_main.cpp $(SRCS)
 BIN = bin/test_runner

@@ -245,6 +245,19 @@ Index (binary)   LSB   Interval Covered
 
 ---
 
+### 15. LRU Cache (Least Recently Used)
+Constant time $O(1)$ key-value cache combining a hash map with a doubly linked list with dummy head and tail sentinels.
+```
+  [ Head (Dummy) ] <---> [ Node A (MRU) ] <---> [ Node B ] <---> [ Node C (LRU) ] <---> [ Tail (Dummy) ]
+         │                       ▲                                       ▲
+         │                       │                                       │
+    Hash Map:              "keyA": ptr                             "keyC": ptr
+```
+- **Documentation:** [`docs/15_lru_cache.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/15_lru_cache.md)
+- **Key Highlight:** $O(1)$ `get` and `put`, automatic eviction of the least recently used element when capacity is full.
+
+---
+
 ## 📊 Complexity & Comparison Matrix
 
 | Data Structure | Access | Search | Insert | Delete | Space Complexity |
@@ -263,6 +276,7 @@ Index (binary)   LSB   Interval Covered
 | **Graph (Adjacency List)** | N/A | $O(V + E)$ | $O(1)$ | $O(\text{deg}(v))$ | $O(V + E)$ |
 | **Segment Tree** | $O(\log n)$ | $O(\log n)$ | $O(\log n)$ | N/A | $O(n)$ |
 | **Fenwick Tree (BIT)** | $O(\log n)$ | $O(\log n)$ | $O(\log n)$ | N/A | $O(n)$ |
+| **LRU Cache** | N/A | $O(1)$ | $O(1)$ | $O(1)$ | $O(\text{capacity})$ |
 
 ---
 
@@ -288,7 +302,8 @@ DATA_STRUCTURES/
 │   ├── 11_avl_tree.md
 │   ├── 12_graph.md
 │   ├── 13_segment_tree.md
-│   └── 14_fenwick_tree.md
+│   ├── 14_fenwick_tree.md
+│   └── 15_lru_cache.md
 ├── c/                                # C11 implementations (numbered subdirectories)
 │   ├── Makefile
 │   ├── common/include/               # Shared status codes (common.h)
@@ -306,6 +321,7 @@ DATA_STRUCTURES/
 │   ├── 12_graph/
 │   ├── 13_segment_tree/
 │   ├── 14_fenwick_tree/
+│   ├── 15_lru_cache/
 │   └── tests/test_runner.c           # Comprehensive C test suite
 ├── cpp/                              # Modern C++20 templated implementations (numbered subdirectories)
 │   ├── Makefile
@@ -323,6 +339,7 @@ DATA_STRUCTURES/
 │   ├── 12_graph/
 │   ├── 13_segment_tree/
 │   ├── 14_fenwick_tree/
+│   ├── 15_lru_cache/
 │   └── tests/test_main.cpp           # Modern C++ test suite
 └── rust/                             # Safe Rust modular crate (numbered module subdirectories)
     ├── Cargo.toml
@@ -341,7 +358,8 @@ DATA_STRUCTURES/
         ├── ds_11_avl_tree/mod.rs
         ├── ds_12_graph/mod.rs
         ├── ds_13_segment_tree/mod.rs
-        └── ds_14_fenwick_tree/mod.rs
+        ├── ds_14_fenwick_tree/mod.rs
+        └── ds_15_lru_cache/mod.rs
 ```
 
 ---
@@ -376,12 +394,12 @@ cd cpp && make run-bst
 
 ### Run Tests for Individual Languages:
 ```bash
-# Run C test suite (14 tests)
+# Run C test suite (15 tests)
 cd c && make test
 
-# Run C++ test suite (14 tests)
+# Run C++ test suite (15 tests)
 cd cpp && make test
 
-# Run Rust unit test suite (14 tests)
+# Run Rust unit test suite (15 tests)
 cargo test --manifest-path rust/Cargo.toml
 ```

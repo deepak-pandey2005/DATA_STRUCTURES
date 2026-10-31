@@ -12,6 +12,7 @@ pub mod ds_11_avl_tree;
 pub mod ds_12_graph;
 pub mod ds_13_segment_tree;
 pub mod ds_14_fenwick_tree;
+pub mod ds_15_lru_cache;
 
 pub use ds_01_vector::MyVec;
 pub use ds_02_singly_linked_list::SinglyLinkedList;
@@ -27,6 +28,7 @@ pub use ds_11_avl_tree::AvlTree;
 pub use ds_12_graph::Graph;
 pub use ds_13_segment_tree::SegmentTree;
 pub use ds_14_fenwick_tree::FenwickTree;
+pub use ds_15_lru_cache::LruCache;
 
 #[cfg(test)]
 mod tests {
@@ -336,5 +338,30 @@ mod tests {
 
         assert!(ft.add(4, 3)); // -1 + 3 = 2
         assert_eq!(ft.range_query(2, 5), Some(17));
+    }
+
+    #[test]
+    fn test_lru_cache() {
+        let mut cache = LruCache::new(2);
+        assert_eq!(cache.capacity(), 2);
+        assert_eq!(cache.len(), 0);
+        assert!(cache.is_empty());
+
+        assert_eq!(cache.put(1, "one"), None);
+        assert_eq!(cache.put(2, "two"), None);
+        assert_eq!(cache.len(), 2);
+
+        assert_eq!(cache.get(&1), Some(&"one"));
+
+        // Put 3 will evict key 2 (as 1 was recently accessed)
+        assert_eq!(cache.put(3, "three"), None);
+        assert_eq!(cache.len(), 2);
+        assert_eq!(cache.get(&2), None);
+        assert_eq!(cache.get(&1), Some(&"one"));
+        assert_eq!(cache.get(&3), Some(&"three"));
+
+        // Update key 1
+        assert_eq!(cache.put(1, "one-updated"), Some("one"));
+        assert_eq!(cache.get(&1), Some(&"one-updated"));
     }
 }

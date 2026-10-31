@@ -16,6 +16,7 @@
 #include "Graph.hpp"
 #include "SegmentTree.hpp"
 #include "FenwickTree.hpp"
+#include "LRUCache.hpp"
 
 static int g_cpp_tests_passed = 0;
 
@@ -462,6 +463,31 @@ void test_fenwick_tree_cpp() {
     CPP_TEST_ASSERT(ft.range_query(2, 5) == 17);
 }
 
+void test_lru_cache_cpp() {
+    ds::LRUCache<int, std::string> cache(2);
+    CPP_TEST_ASSERT(cache.capacity() == 2);
+    CPP_TEST_ASSERT(cache.size() == 0);
+    CPP_TEST_ASSERT(cache.empty());
+
+    cache.put(1, "one");
+    cache.put(2, "two");
+    CPP_TEST_ASSERT(cache.size() == 2);
+    CPP_TEST_ASSERT(cache.contains(1));
+    CPP_TEST_ASSERT(cache.get(1).value() == "one");
+
+    // Put key 3 should evict key 2 (since key 1 was accessed)
+    cache.put(3, "three");
+    CPP_TEST_ASSERT(cache.size() == 2);
+    CPP_TEST_ASSERT(!cache.get(2).has_value());
+    CPP_TEST_ASSERT(cache.get(1).value() == "one");
+    CPP_TEST_ASSERT(cache.get(3).value() == "three");
+
+    // Update existing key
+    cache.put(1, "one-updated");
+    CPP_TEST_ASSERT(cache.get(1).value() == "one-updated");
+    CPP_TEST_ASSERT(cache.size() == 2);
+}
+
 int main() {
     std::cout << "==========================================\n";
     std::cout << "   Running C++ Data Structures Test Suite \n";
@@ -481,6 +507,7 @@ int main() {
     RUN_CPP_TEST(test_graph_cpp);
     RUN_CPP_TEST(test_segment_tree_cpp);
     RUN_CPP_TEST(test_fenwick_tree_cpp);
+    RUN_CPP_TEST(test_lru_cache_cpp);
 
     std::cout << "\nAll " << g_cpp_tests_passed << " C++ tests passed successfully!\n";
     return 0;
