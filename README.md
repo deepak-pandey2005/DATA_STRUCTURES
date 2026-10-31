@@ -276,6 +276,22 @@ Bits:  [0] [0] [0] [1] [0] [0] [0] [1] [0] [0] [0] [0] [1] [0] [0] [0]
 
 ---
 
+### 17. Skip List
+Probabilistic hierarchy of linked lists offering $O(\log n)$ search, insert, and delete without rigid tree rotation overhead.
+```
+Level 3: [Head] ─────────────────────────────► [ 30 ] ───────────────────► [NIL]
+                  │                                │
+Level 2: [Head] ──────────────► [ 15 ] ────────► [ 30 ] ────────► [ 50 ] ─► [NIL]
+                  │                │               │                │
+Level 1: [Head] ──► [ 7 ] ─────► [ 15 ] ────────► [ 30 ] ─► [ 42 ] ─► [ 50 ] ─► [NIL]
+                  │    │           │               │        │       │
+Level 0: [Head] ──► [ 7 ] ─► [10]─► [ 15 ] ─► [21] ─► [ 30 ] ─► [ 42 ] ─► [ 50 ] ─► [NIL]
+```
+- **Documentation:** [`docs/17_skip_list.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/17_skip_list.md)
+- **Key Highlight:** $O(\log n)$ average search, insertion, and deletion using geometric coin-flip tower sizing.
+
+---
+
 ## 📊 Complexity & Comparison Matrix
 
 | Data Structure | Access | Search | Insert | Delete | Space Complexity |
@@ -296,6 +312,7 @@ Bits:  [0] [0] [0] [1] [0] [0] [0] [1] [0] [0] [0] [0] [1] [0] [0] [0]
 | **Fenwick Tree (BIT)** | $O(\log n)$ | $O(\log n)$ | $O(\log n)$ | N/A | $O(n)$ |
 | **LRU Cache** | N/A | $O(1)$ | $O(1)$ | $O(1)$ | $O(\text{capacity})$ |
 | **Bloom Filter** | N/A | $O(k)$ (probabilistic) | $O(k)$ | N/A | $O(m)$ bits |
+| **Skip List** | $O(\log n)$ avg | $O(\log n)$ avg | $O(\log n)$ avg | $O(\log n)$ avg | $O(n)$ |
 
 ---
 
@@ -323,7 +340,8 @@ DATA_STRUCTURES/
 │   ├── 13_segment_tree.md
 │   ├── 14_fenwick_tree.md
 │   ├── 15_lru_cache.md
-│   └── 16_bloom_filter.md
+│   ├── 16_bloom_filter.md
+│   └── 17_skip_list.md
 ├── c/                                # C11 implementations (numbered subdirectories)
 │   ├── Makefile
 │   ├── common/include/               # Shared status codes (common.h)
@@ -343,6 +361,7 @@ DATA_STRUCTURES/
 │   ├── 14_fenwick_tree/
 │   ├── 15_lru_cache/
 │   ├── 16_bloom_filter/
+│   ├── 17_skip_list/
 │   └── tests/test_runner.c           # Comprehensive C test suite
 ├── cpp/                              # Modern C++20 templated implementations (numbered subdirectories)
 │   ├── Makefile
@@ -362,6 +381,7 @@ DATA_STRUCTURES/
 │   ├── 14_fenwick_tree/
 │   ├── 15_lru_cache/
 │   ├── 16_bloom_filter/
+│   ├── 17_skip_list/
 │   └── tests/test_main.cpp           # Modern C++ test suite
 └── rust/                             # Safe Rust modular crate (numbered module subdirectories)
     ├── Cargo.toml
@@ -382,7 +402,8 @@ DATA_STRUCTURES/
         ├── ds_13_segment_tree/mod.rs
         ├── ds_14_fenwick_tree/mod.rs
         ├── ds_15_lru_cache/mod.rs
-        └── ds_16_bloom_filter/mod.rs
+        ├── ds_16_bloom_filter/mod.rs
+        └── ds_17_skip_list/mod.rs
 ```
 
 ---
@@ -417,12 +438,12 @@ cd cpp && make run-bst
 
 ### Run Tests for Individual Languages:
 ```bash
-# Run C test suite (16 tests)
+# Run C test suite (17 tests)
 cd c && make test
 
-# Run C++ test suite (16 tests)
+# Run C++ test suite (17 tests)
 cd cpp && make test
 
-# Run Rust unit test suite (16 tests)
+# Run Rust unit test suite (17 tests)
 cargo test --manifest-path rust/Cargo.toml
 ```

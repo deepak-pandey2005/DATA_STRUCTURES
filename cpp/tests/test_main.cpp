@@ -18,6 +18,7 @@
 #include "FenwickTree.hpp"
 #include "LRUCache.hpp"
 #include "BloomFilter.hpp"
+#include "SkipList.hpp"
 
 static int g_cpp_tests_passed = 0;
 
@@ -511,6 +512,35 @@ void test_bloom_filter_cpp() {
     CPP_TEST_ASSERT(!bf.contains("alpha"));
 }
 
+void test_skip_list_cpp() {
+    ds::SkipList<int, std::string> sl;
+    CPP_TEST_ASSERT(sl.empty());
+    CPP_TEST_ASSERT(sl.size() == 0);
+
+    CPP_TEST_ASSERT(sl.insert(30, "thirty"));
+    CPP_TEST_ASSERT(sl.insert(10, "ten"));
+    CPP_TEST_ASSERT(sl.insert(20, "twenty"));
+    CPP_TEST_ASSERT(sl.insert(40, "forty"));
+    CPP_TEST_ASSERT(sl.size() == 4);
+
+    CPP_TEST_ASSERT(sl.search(10).value() == "ten");
+    CPP_TEST_ASSERT(sl.search(20).value() == "twenty");
+    CPP_TEST_ASSERT(sl.search(30).value() == "thirty");
+    CPP_TEST_ASSERT(sl.search(40).value() == "forty");
+    CPP_TEST_ASSERT(!sl.search(99).has_value());
+
+    // Update existing key
+    CPP_TEST_ASSERT(!sl.insert(20, "twenty-updated"));
+    CPP_TEST_ASSERT(sl.search(20).value() == "twenty-updated");
+    CPP_TEST_ASSERT(sl.size() == 4);
+
+    // Remove key
+    CPP_TEST_ASSERT(sl.remove(20));
+    CPP_TEST_ASSERT(sl.size() == 3);
+    CPP_TEST_ASSERT(!sl.search(20).has_value());
+    CPP_TEST_ASSERT(!sl.remove(99));
+}
+
 int main() {
     std::cout << "==========================================\n";
     std::cout << "   Running C++ Data Structures Test Suite \n";
@@ -532,6 +562,7 @@ int main() {
     RUN_CPP_TEST(test_fenwick_tree_cpp);
     RUN_CPP_TEST(test_lru_cache_cpp);
     RUN_CPP_TEST(test_bloom_filter_cpp);
+    RUN_CPP_TEST(test_skip_list_cpp);
 
     std::cout << "\nAll " << g_cpp_tests_passed << " C++ tests passed successfully!\n";
     return 0;

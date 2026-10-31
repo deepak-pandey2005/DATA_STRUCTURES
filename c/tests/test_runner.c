@@ -18,6 +18,7 @@
 #include "fenwick_tree.h"
 #include "lru_cache.h"
 #include "bloom_filter.h"
+#include "skip_list.h"
 
 static int g_tests_passed = 0;
 
@@ -576,6 +577,40 @@ void test_bloom_filter() {
     bloom_destroy(bf);
 }
 
+/* --- Skip List Tests --- */
+void test_skip_list() {
+    skiplist_t *sl = NULL;
+    TEST_ASSERT(skiplist_create(&sl) == DS_SUCCESS);
+    TEST_ASSERT(skiplist_is_empty(sl));
+    TEST_ASSERT(skiplist_size(sl) == 0);
+
+    TEST_ASSERT(skiplist_insert(sl, 30, 300) == DS_SUCCESS);
+    TEST_ASSERT(skiplist_insert(sl, 10, 100) == DS_SUCCESS);
+    TEST_ASSERT(skiplist_insert(sl, 20, 200) == DS_SUCCESS);
+    TEST_ASSERT(skiplist_insert(sl, 40, 400) == DS_SUCCESS);
+    TEST_ASSERT(skiplist_size(sl) == 4);
+
+    int val = 0;
+    TEST_ASSERT(skiplist_search(sl, 20, &val) == DS_SUCCESS && val == 200);
+    TEST_ASSERT(skiplist_search(sl, 10, &val) == DS_SUCCESS && val == 100);
+    TEST_ASSERT(skiplist_search(sl, 30, &val) == DS_SUCCESS && val == 300);
+    TEST_ASSERT(skiplist_search(sl, 40, &val) == DS_SUCCESS && val == 400);
+    TEST_ASSERT(skiplist_search(sl, 50, &val) == DS_ERR_NOT_FOUND);
+
+    // Update existing key
+    TEST_ASSERT(skiplist_insert(sl, 20, 250) == DS_SUCCESS);
+    TEST_ASSERT(skiplist_search(sl, 20, &val) == DS_SUCCESS && val == 250);
+    TEST_ASSERT(skiplist_size(sl) == 4);
+
+    // Remove
+    TEST_ASSERT(skiplist_remove(sl, 20) == DS_SUCCESS);
+    TEST_ASSERT(skiplist_size(sl) == 3);
+    TEST_ASSERT(skiplist_search(sl, 20, &val) == DS_ERR_NOT_FOUND);
+    TEST_ASSERT(skiplist_remove(sl, 99) == DS_ERR_NOT_FOUND);
+
+    skiplist_destroy(sl);
+}
+
 int main(void) {
     printf("========================================\n");
     printf("   Running C Data Structures Test Suite \n");
@@ -597,6 +632,7 @@ int main(void) {
     RUN_TEST(test_fenwick_tree);
     RUN_TEST(test_lru_cache);
     RUN_TEST(test_bloom_filter);
+    RUN_TEST(test_skip_list);
 
     printf("\nAll %d C tests passed successfully!\n", g_tests_passed);
     return 0;

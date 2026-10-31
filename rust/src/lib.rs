@@ -14,6 +14,7 @@ pub mod ds_13_segment_tree;
 pub mod ds_14_fenwick_tree;
 pub mod ds_15_lru_cache;
 pub mod ds_16_bloom_filter;
+pub mod ds_17_skip_list;
 
 pub use ds_01_vector::MyVec;
 pub use ds_02_singly_linked_list::SinglyLinkedList;
@@ -31,6 +32,7 @@ pub use ds_13_segment_tree::SegmentTree;
 pub use ds_14_fenwick_tree::FenwickTree;
 pub use ds_15_lru_cache::LruCache;
 pub use ds_16_bloom_filter::BloomFilter;
+pub use ds_17_skip_list::SkipList;
 
 #[cfg(test)]
 mod tests {
@@ -387,5 +389,35 @@ mod tests {
 
         bf.clear();
         assert!(!bf.contains(&"alpha"));
+    }
+
+    #[test]
+    fn test_skip_list() {
+        let mut sl = SkipList::new();
+        assert_eq!(sl.len(), 0);
+        assert!(sl.is_empty());
+
+        assert_eq!(sl.insert(30, "thirty"), None);
+        assert_eq!(sl.insert(10, "ten"), None);
+        assert_eq!(sl.insert(20, "twenty"), None);
+        assert_eq!(sl.insert(40, "forty"), None);
+        assert_eq!(sl.len(), 4);
+
+        assert_eq!(sl.get(&10), Some(&"ten"));
+        assert_eq!(sl.get(&20), Some(&"twenty"));
+        assert_eq!(sl.get(&30), Some(&"thirty"));
+        assert_eq!(sl.get(&40), Some(&"forty"));
+        assert_eq!(sl.get(&99), None);
+
+        // Update existing key
+        assert_eq!(sl.insert(20, "twenty-updated"), Some("twenty"));
+        assert_eq!(sl.get(&20), Some(&"twenty-updated"));
+        assert_eq!(sl.len(), 4);
+
+        // Remove key
+        assert_eq!(sl.remove(&20), Some("twenty-updated"));
+        assert_eq!(sl.len(), 3);
+        assert_eq!(sl.get(&20), None);
+        assert_eq!(sl.remove(&99), None);
     }
 }

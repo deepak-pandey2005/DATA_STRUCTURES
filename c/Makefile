@@ -17,6 +17,7 @@ CFLAGS = -Wall -Wextra -pedantic -std=c11 \
          -I14_fenwick_tree/include \
          -I15_lru_cache/include \
          -I16_bloom_filter/include \
+         -I17_skip_list/include \
          -g
 
 SRCS = 01_vector/src/vector.c \
@@ -34,7 +35,8 @@ SRCS = 01_vector/src/vector.c \
        13_segment_tree/src/segment_tree.c \
        14_fenwick_tree/src/fenwick_tree.c \
        15_lru_cache/src/lru_cache.c \
-       16_bloom_filter/src/bloom_filter.c
+       16_bloom_filter/src/bloom_filter.c \
+       17_skip_list/src/skip_list.c
 
 TEST_SRCS = tests/test_runner.c $(SRCS)
 TEST_BIN = bin/test_runner

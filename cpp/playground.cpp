@@ -24,6 +24,7 @@
 #include "FenwickTree.hpp"
 #include "LRUCache.hpp"
 #include "BloomFilter.hpp"
+#include "SkipList.hpp"
 
 static void clear_input() {
     std::cin.clear();
@@ -434,6 +435,42 @@ static void run_bloom_filter_demo() {
     }
 }
 
+static void run_skip_list_demo() {
+    std::cout << "\n--- [17] Skip List Playground ---\n";
+    ds::SkipList<int, std::string> sl;
+
+    int choice = 0;
+    while (true) {
+        std::cout << "\nSkip List size: " << sl.size() << "\n";
+        std::cout << "1. Insert (Key, Value) | 2. Search (Key) | 3. Remove (Key) | 0. Back: ";
+        if (!(std::cin >> choice) || choice == 0) break;
+        if (choice == 1) {
+            int key;
+            std::string val;
+            std::cout << "Enter integer key and string value: ";
+            if (std::cin >> key >> val) {
+                bool inserted = sl.insert(key, val);
+                std::cout << (inserted ? "Inserted" : "Updated") << " (" << key << " -> " << val << ")\n";
+            } else clear_input();
+        } else if (choice == 2) {
+            int key;
+            std::cout << "Enter key to search: ";
+            if (std::cin >> key) {
+                auto res = sl.search(key);
+                if (res) std::cout << "Found value: " << *res << "\n";
+                else std::cout << "Key " << key << " not found!\n";
+            } else clear_input();
+        } else if (choice == 3) {
+            int key;
+            std::cout << "Enter key to remove: ";
+            if (std::cin >> key) {
+                if (sl.remove(key)) std::cout << "Removed key " << key << " successfully.\n";
+                else std::cout << "Key " << key << " not found!\n";
+            } else clear_input();
+        }
+    }
+}
+
 int main() {
     std::cout << "========================================================\n";
     std::cout << "  Interactive Data Structures Playground (Modern C++20) \n";
@@ -454,6 +491,7 @@ int main() {
         std::cout << " 10. [14] Fenwick Tree (Binary Indexed Tree)\n";
         std::cout << " 11. [15] LRU Cache (Least Recently Used)\n";
         std::cout << " 12. [16] Bloom Filter (Probabilistic Set)\n";
+        std::cout << " 13. [17] Skip List (Probabilistic Search)\n";
         std::cout << "  0. Exit\n";
         std::cout << "Enter choice: ";
 
@@ -475,6 +513,7 @@ int main() {
             case 10: run_fenwick_tree_demo(); break;
             case 11: run_lru_cache_demo(); break;
             case 12: run_bloom_filter_demo(); break;
+            case 13: run_skip_list_demo(); break;
             default:
                 std::cout << "Invalid choice!\n";
                 clear_input();
