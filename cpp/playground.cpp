@@ -20,6 +20,8 @@
 #include "DSU.hpp"
 #include "AVLTree.hpp"
 #include "Graph.hpp"
+#include "SegmentTree.hpp"
+#include "FenwickTree.hpp"
 
 static void clear_input() {
     std::cin.clear();
@@ -281,6 +283,72 @@ static void run_graph_demo() {
     }
 }
 
+static void run_segment_tree_demo() {
+    std::cout << "\n--- [13] Segment Tree Playground ---\n";
+    std::vector<int> arr = {1, 3, 5, 7, 9, 11};
+    ds::SegmentTree<int> st(arr, 0);
+
+    int choice = 0;
+    while (true) {
+        std::cout << "\nArray size: " << st.size() << "\n";
+        std::cout << "1. Range Sum Query [L, R] | 2. Point Update (Index, Value) | 0. Back: ";
+        if (!(std::cin >> choice) || choice == 0) break;
+        if (choice == 1) {
+            std::size_t l, r;
+            std::cout << "Enter L and R (0-based, <= " << st.size() - 1 << "): ";
+            if (std::cin >> l >> r && l <= r && r < st.size()) {
+                std::cout << "Sum in [" << l << ", " << r << "] = " << st.query(l, r) << "\n";
+            } else {
+                std::cout << "Invalid range!\n";
+            }
+        } else if (choice == 2) {
+            std::size_t idx;
+            int val;
+            std::cout << "Enter index and new value: ";
+            if (std::cin >> idx >> val && idx < st.size()) {
+                st.update(idx, val);
+                std::cout << "Updated index " << idx << " to " << val << "\n";
+            } else {
+                std::cout << "Invalid index!\n";
+            }
+        }
+    }
+}
+
+static void run_fenwick_tree_demo() {
+    std::cout << "\n--- [14] Fenwick Tree (BIT) Playground ---\n";
+    std::vector<int> arr = {2, 1, 4, 6, -1, 5, -3, 2};
+    ds::FenwickTree<int> ft(arr);
+
+    int choice = 0;
+    while (true) {
+        std::cout << "\nFenwick Tree size: " << ft.size() << "\n";
+        std::cout << "1. Prefix Sum [0..i] | 2. Range Sum [L..R] | 3. Add Delta | 0. Back: ";
+        if (!(std::cin >> choice) || choice == 0) break;
+        if (choice == 1) {
+            std::size_t idx;
+            std::cout << "Enter index (0.." << ft.size() - 1 << "): ";
+            if (std::cin >> idx && idx < ft.size()) {
+                std::cout << "Prefix sum [0.." << idx << "] = " << ft.query(idx) << "\n";
+            } else std::cout << "Invalid index!\n";
+        } else if (choice == 2) {
+            std::size_t l, r;
+            std::cout << "Enter L and R (0.." << ft.size() - 1 << "): ";
+            if (std::cin >> l >> r && l <= r && r < ft.size()) {
+                std::cout << "Range sum [" << l << ".." << r << "] = " << ft.range_query(l, r) << "\n";
+            } else std::cout << "Invalid range!\n";
+        } else if (choice == 3) {
+            std::size_t idx;
+            int delta;
+            std::cout << "Enter index and delta to add: ";
+            if (std::cin >> idx >> delta && idx < ft.size()) {
+                ft.add(idx, delta);
+                std::cout << "Added delta " << delta << " to index " << idx << "\n";
+            } else std::cout << "Invalid index!\n";
+        }
+    }
+}
+
 int main() {
     std::cout << "========================================================\n";
     std::cout << "  Interactive Data Structures Playground (Modern C++20) \n";
@@ -297,6 +365,8 @@ int main() {
         std::cout << "  6. [10] Disjoint Set Union (DSU)\n";
         std::cout << "  7. [11] AVL Tree (Self-Balancing)\n";
         std::cout << "  8. [12] Graph (Adjacency List + BFS/DFS)\n";
+        std::cout << "  9. [13] Segment Tree\n";
+        std::cout << " 10. [14] Fenwick Tree (Binary Indexed Tree)\n";
         std::cout << "  0. Exit\n";
         std::cout << "Enter choice: ";
 
@@ -314,6 +384,8 @@ int main() {
             case 6: run_dsu_demo(); break;
             case 7: run_avl_demo(); break;
             case 8: run_graph_demo(); break;
+            case 9: run_segment_tree_demo(); break;
+            case 10: run_fenwick_tree_demo(); break;
             default:
                 std::cout << "Invalid choice!\n";
                 clear_input();

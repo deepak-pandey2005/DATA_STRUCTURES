@@ -10,6 +10,8 @@ pub mod ds_09_trie;
 pub mod ds_10_dsu;
 pub mod ds_11_avl_tree;
 pub mod ds_12_graph;
+pub mod ds_13_segment_tree;
+pub mod ds_14_fenwick_tree;
 
 pub use ds_01_vector::MyVec;
 pub use ds_02_singly_linked_list::SinglyLinkedList;
@@ -23,6 +25,8 @@ pub use ds_09_trie::Trie;
 pub use ds_10_dsu::Dsu;
 pub use ds_11_avl_tree::AvlTree;
 pub use ds_12_graph::Graph;
+pub use ds_13_segment_tree::SegmentTree;
+pub use ds_14_fenwick_tree::FenwickTree;
 
 #[cfg(test)]
 mod tests {
@@ -304,5 +308,33 @@ mod tests {
         let dfs_res = g.dfs(0);
         assert_eq!(dfs_res.len(), 5);
         assert_eq!(dfs_res[0], 0);
+    }
+
+    #[test]
+    fn test_segment_tree() {
+        let arr = vec![1, 3, 5, 7, 9, 11];
+        let mut st = SegmentTree::new(&arr, 0, |a, b| a + b);
+
+        assert_eq!(st.len(), 6);
+        assert_eq!(st.query(1, 3), Some(15));
+        assert_eq!(st.query(0, 5), Some(36));
+
+        assert!(st.update(1, 10)); // arr[1] = 10
+        assert_eq!(st.query(1, 3), Some(22));
+        assert_eq!(st.query(0, 5), Some(43));
+    }
+
+    #[test]
+    fn test_fenwick_tree() {
+        let arr = vec![2, 1, 4, 6, -1, 5, -3, 2];
+        let mut ft = FenwickTree::from_slice(&arr);
+
+        assert_eq!(ft.len(), 8);
+        assert_eq!(ft.query(0), Some(2));
+        assert_eq!(ft.query(3), Some(13));
+        assert_eq!(ft.range_query(2, 5), Some(14));
+
+        assert!(ft.add(4, 3)); // -1 + 3 = 2
+        assert_eq!(ft.range_query(2, 5), Some(17));
     }
 }

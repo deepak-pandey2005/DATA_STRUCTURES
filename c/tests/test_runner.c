@@ -13,6 +13,8 @@
 #include "dsu.h"
 #include "avl_tree.h"
 #include "graph.h"
+#include "segment_tree.h"
+#include "fenwick_tree.h"
 
 static int g_tests_passed = 0;
 
@@ -473,6 +475,49 @@ void test_graph() {
     graph_destroy(&g);
 }
 
+/* --- Segment Tree Tests --- */
+void test_segment_tree() {
+    int64_t arr[] = {1, 3, 5, 7, 9, 11};
+    size_t n = sizeof(arr) / sizeof(arr[0]);
+
+    SegmentTree st;
+    TEST_ASSERT(segtree_init(&st, arr, n) == DS_SUCCESS);
+    TEST_ASSERT(segtree_size(&st) == n);
+
+    int64_t sum = 0;
+    TEST_ASSERT(segtree_query(&st, 1, 3, &sum) == DS_SUCCESS && sum == 15); // 3+5+7
+    TEST_ASSERT(segtree_query(&st, 0, 5, &sum) == DS_SUCCESS && sum == 36); // sum all
+    TEST_ASSERT(segtree_query(&st, 2, 2, &sum) == DS_SUCCESS && sum == 5);
+
+    // Update arr[1] to 10: {1, 10, 5, 7, 9, 11}
+    TEST_ASSERT(segtree_update(&st, 1, 10) == DS_SUCCESS);
+    TEST_ASSERT(segtree_query(&st, 1, 3, &sum) == DS_SUCCESS && sum == 22); // 10+5+7
+    TEST_ASSERT(segtree_query(&st, 0, 5, &sum) == DS_SUCCESS && sum == 43);
+
+    segtree_destroy(&st);
+}
+
+/* --- Fenwick Tree Tests --- */
+void test_fenwick_tree() {
+    int64_t arr[] = {2, 1, 4, 6, -1, 5, -3, 2};
+    size_t n = sizeof(arr) / sizeof(arr[0]);
+
+    FenwickTree ft;
+    TEST_ASSERT(fenwick_from_array(&ft, arr, n) == DS_SUCCESS);
+    TEST_ASSERT(fenwick_size(&ft) == n);
+
+    int64_t sum = 0;
+    TEST_ASSERT(fenwick_query(&ft, 0, &sum) == DS_SUCCESS && sum == 2);
+    TEST_ASSERT(fenwick_query(&ft, 3, &sum) == DS_SUCCESS && sum == 13); // 2+1+4+6
+    TEST_ASSERT(fenwick_range_query(&ft, 2, 5, &sum) == DS_SUCCESS && sum == 14); // 4+6+(-1)+5
+
+    // Add 3 to element at index 4: arr[4] becomes 2
+    TEST_ASSERT(fenwick_add(&ft, 4, 3) == DS_SUCCESS);
+    TEST_ASSERT(fenwick_range_query(&ft, 2, 5, &sum) == DS_SUCCESS && sum == 17);
+
+    fenwick_destroy(&ft);
+}
+
 int main(void) {
     printf("========================================\n");
     printf("   Running C Data Structures Test Suite \n");
@@ -490,6 +535,8 @@ int main(void) {
     RUN_TEST(test_dsu);
     RUN_TEST(test_avl);
     RUN_TEST(test_graph);
+    RUN_TEST(test_segment_tree);
+    RUN_TEST(test_fenwick_tree);
 
     printf("\nAll %d C tests passed successfully!\n", g_tests_passed);
     return 0;

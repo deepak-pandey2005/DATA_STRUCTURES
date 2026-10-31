@@ -211,6 +211,40 @@ Graph Topology:                      Adjacency List:
 
 ---
 
+### 13. Segment Tree
+Binary tree representing interval segments for fast range queries and point updates.
+```
+                   [0..3] (Sum: 16)
+                  /                \
+        [0..1] (Sum: 6)        [2..3] (Sum: 10)
+        /            \         /             \
+    [0] (1)        [1] (5)   [2] (3)        [3] (7)
+
+Original Array: [1, 5, 3, 7]
+```
+- **Documentation:** [`docs/13_segment_tree.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/13_segment_tree.md)
+- **Key Highlight:** $O(\log n)$ range queries (Sum/Min/Max) and point updates in flat $4n$ array.
+
+---
+
+### 14. Fenwick Tree (Binary Indexed Tree / BIT)
+Prefix-sum table indexed by lowest-set-bits ($i \ \& \ -i$) with zero tree-pointer overhead.
+```
+Index (binary)   LSB   Interval Covered
+1     (0001)     1     [1..1]
+2     (0010)     2     [1..2]
+3     (0011)     1     [3..3]
+4     (0100)     4     [1..4]
+5     (0101)     1     [5..5]
+6     (0110)     2     [5..6]
+7     (0111)     1     [7..7]
+8     (1000)     8     [1..8]
+```
+- **Documentation:** [`docs/14_fenwick_tree.md`](file:///home/deepak/OPENSOURCE/DATA_STRUCTURES/docs/14_fenwick_tree.md)
+- **Key Highlight:** In-place $O(n)$ space, $O(\log n)$ prefix/range queries and updates via bitwise masking.
+
+---
+
 ## 📊 Complexity & Comparison Matrix
 
 | Data Structure | Access | Search | Insert | Delete | Space Complexity |
@@ -227,6 +261,8 @@ Graph Topology:                      Adjacency List:
 | **Disjoint Set Union (DSU)** | N/A | $\alpha(n)$ | $\alpha(n)$ | N/A | $O(n)$ |
 | **AVL Tree** | $O(\log n)$ | $O(\log n)$ | $O(\log n)$ | $O(\log n)$ | $O(n)$ |
 | **Graph (Adjacency List)** | N/A | $O(V + E)$ | $O(1)$ | $O(\text{deg}(v))$ | $O(V + E)$ |
+| **Segment Tree** | $O(\log n)$ | $O(\log n)$ | $O(\log n)$ | N/A | $O(n)$ |
+| **Fenwick Tree (BIT)** | $O(\log n)$ | $O(\log n)$ | $O(\log n)$ | N/A | $O(n)$ |
 
 ---
 
@@ -250,7 +286,9 @@ DATA_STRUCTURES/
 │   ├── 09_trie.md
 │   ├── 10_dsu.md
 │   ├── 11_avl_tree.md
-│   └── 12_graph.md
+│   ├── 12_graph.md
+│   ├── 13_segment_tree.md
+│   └── 14_fenwick_tree.md
 ├── c/                                # C11 implementations (numbered subdirectories)
 │   ├── Makefile
 │   ├── common/include/               # Shared status codes (common.h)
@@ -266,6 +304,8 @@ DATA_STRUCTURES/
 │   ├── 10_dsu/
 │   ├── 11_avl_tree/
 │   ├── 12_graph/
+│   ├── 13_segment_tree/
+│   ├── 14_fenwick_tree/
 │   └── tests/test_runner.c           # Comprehensive C test suite
 ├── cpp/                              # Modern C++20 templated implementations (numbered subdirectories)
 │   ├── Makefile
@@ -281,6 +321,8 @@ DATA_STRUCTURES/
 │   ├── 10_dsu/
 │   ├── 11_avl_tree/
 │   ├── 12_graph/
+│   ├── 13_segment_tree/
+│   ├── 14_fenwick_tree/
 │   └── tests/test_main.cpp           # Modern C++ test suite
 └── rust/                             # Safe Rust modular crate (numbered module subdirectories)
     ├── Cargo.toml
@@ -297,7 +339,9 @@ DATA_STRUCTURES/
         ├── ds_09_trie/mod.rs
         ├── ds_10_dsu/mod.rs
         ├── ds_11_avl_tree/mod.rs
-        └── ds_12_graph/mod.rs
+        ├── ds_12_graph/mod.rs
+        ├── ds_13_segment_tree/mod.rs
+        └── ds_14_fenwick_tree/mod.rs
 ```
 
 ---
@@ -332,12 +376,12 @@ cd cpp && make run-bst
 
 ### Run Tests for Individual Languages:
 ```bash
-# Run C test suite (12 tests)
+# Run C test suite (14 tests)
 cd c && make test
 
-# Run C++ test suite (12 tests)
+# Run C++ test suite (14 tests)
 cd cpp && make test
 
-# Run Rust unit test suite (12 tests)
+# Run Rust unit test suite (14 tests)
 cargo test --manifest-path rust/Cargo.toml
 ```

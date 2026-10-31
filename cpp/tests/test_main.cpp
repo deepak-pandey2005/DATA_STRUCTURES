@@ -14,6 +14,8 @@
 #include "DSU.hpp"
 #include "AVLTree.hpp"
 #include "Graph.hpp"
+#include "SegmentTree.hpp"
+#include "FenwickTree.hpp"
 
 static int g_cpp_tests_passed = 0;
 
@@ -434,6 +436,32 @@ void test_graph_cpp() {
     CPP_TEST_ASSERT(dfs_order[0] == 0);
 }
 
+void test_segment_tree_cpp() {
+    std::vector<int> arr = {1, 3, 5, 7, 9, 11};
+    ds::SegmentTree<int> st(arr, 0);
+
+    CPP_TEST_ASSERT(st.size() == 6);
+    CPP_TEST_ASSERT(st.query(1, 3) == 15); // 3+5+7
+    CPP_TEST_ASSERT(st.query(0, 5) == 36);
+
+    st.update(1, 10); // arr[1] = 10 -> sum becomes 43
+    CPP_TEST_ASSERT(st.query(1, 3) == 22); // 10+5+7
+    CPP_TEST_ASSERT(st.query(0, 5) == 43);
+}
+
+void test_fenwick_tree_cpp() {
+    std::vector<int> arr = {2, 1, 4, 6, -1, 5, -3, 2};
+    ds::FenwickTree<int> ft(arr);
+
+    CPP_TEST_ASSERT(ft.size() == 8);
+    CPP_TEST_ASSERT(ft.query(0) == 2);
+    CPP_TEST_ASSERT(ft.query(3) == 13);
+    CPP_TEST_ASSERT(ft.range_query(2, 5) == 14);
+
+    ft.add(4, 3); // add 3 to index 4 (-1 + 3 = 2)
+    CPP_TEST_ASSERT(ft.range_query(2, 5) == 17);
+}
+
 int main() {
     std::cout << "==========================================\n";
     std::cout << "   Running C++ Data Structures Test Suite \n";
@@ -451,6 +479,8 @@ int main() {
     RUN_CPP_TEST(test_dsu_cpp);
     RUN_CPP_TEST(test_avl_tree_cpp);
     RUN_CPP_TEST(test_graph_cpp);
+    RUN_CPP_TEST(test_segment_tree_cpp);
+    RUN_CPP_TEST(test_fenwick_tree_cpp);
 
     std::cout << "\nAll " << g_cpp_tests_passed << " C++ tests passed successfully!\n";
     return 0;
