@@ -31,3 +31,4 @@ size_t skiplist_size(const skiplist_t *list);
 bool skiplist_is_empty(const skiplist_t *list);
 
 #endif /* DS_SKIP_LIST_H */
+

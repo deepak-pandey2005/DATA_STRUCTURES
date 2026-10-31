@@ -156,3 +156,4 @@ size_t skiplist_size(const skiplist_t *list) {
 bool skiplist_is_empty(const skiplist_t *list) {
     return list ? list->size == 0 : true;
 }
+

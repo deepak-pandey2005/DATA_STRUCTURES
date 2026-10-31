@@ -43,3 +43,4 @@ Level 0: [Head] ──► [ 7 ] ─► [10]─► [ 15 ] ─► [21] ─► [ 30
 - **C (`c/17_skip_list/`)**: Node structures with dynamic/flexible forward pointer arrays (`skiplist_node_t *forward[]`), pseudo-random level generator, and explicit sentinel head.
 - **C++ (`cpp/17_skip_list/`)**: Modern templated `SkipList<Key, Value, Compare>` with modern random number generation (`std::mt19937`) and clean RAII memory management.
 - **Safe Rust (`rust/src/ds_17_skip_list/`)**: High-performance, memory-safe index arena or vector-linked towers avoiding raw unsafe pointer dereferences.
+
